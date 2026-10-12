@@ -1,0 +1,200 @@
+{
+  "version": 1,
+  "created": "2026-10-13T01:17:02",
+  "query": "为「织梦 STORYWEAVER」AI 互动叙事游戏桌面端设计高保真首页（剧本大厅）。现有低保真原型信息架构已确认，首页包含：Hero 主视觉区（品牌文案+开启故事 CTA）、分类筛选 Tab（全部/悬疑奇幻/治愈冒险/我的剧本）、继续旅程卡、剧本封面卡片网格、我的剧本区、空状态；侧边栏四导航（剧本大厅/上传剧本/我的旅程/任务手记）。风格方向「夜行档案・都市怪谈」：深夜蓝黑 #0E1420 主背景、档案纸米黄 #F2EAD8 信息载体、警示红 #B03A2E 关键色、荧光青 #58C1B2 线索高亮、暗金 #BFA05A 层级装饰；牛皮纸档案卡/红色印章/打字机文字/雾气霓虹质感；标题衬线+正文黑体。桌面端 1440×900，鼠标键盘操作，hash 路由，所有按钮可点击。要求 ≥8 个真实视觉资产、截图自查。交付：单文件可运行 HTML 高保真原型 + 设计说明。",
+  "contract": {
+    "query": "为「织梦 STORYWEAVER」AI 互动叙事游戏桌面端设计高保真首页（剧本大厅）。现有低保真原型信息架构已确认，首页包含：Hero 主视觉区（品牌文案+开启故事 CTA）、分类筛选 Tab（全部/悬疑奇幻/治愈冒险/我的剧本）、继续旅程卡、剧本封面卡片网格、我的剧本区、空状态；侧边栏四导航（剧本大厅/上传剧本/我的旅程/任务手记）。风格方向「夜行档案・都市怪谈」：深夜蓝黑 #0E1420 主背景、档案纸米黄 #F2EAD8 信息载体、警示红 #B03A2E 关键色、荧光青 #58C1B2 线索高亮、暗金 #BFA05A 层级装饰；牛皮纸档案卡/红色印章/打字机文字/雾气霓虹质感；标题衬线+正文黑体。桌面端 1440×900，鼠标键盘操作，hash 路由，所有按钮可点击。要求 ≥8 个真实视觉资产、截图自查。交付：单文件可运行 HTML 高保真原型 + 设计说明。",
+    "artifactClass": "mobile",
+    "surface": "mobile-app",
+    "provenance": "explicit",
+    "operation": "create",
+    "handoff": [
+      "html",
+      "doc"
+    ],
+    "count": {
+      "unit": "屏",
+      "n": null,
+      "mode": "target",
+      "source": "载体默认"
+    },
+    "canvas": {
+      "w": 390,
+      "h": 844,
+      "source": "载体默认"
+    },
+    "ledger": [
+      {
+        "kind": "文案",
+        "value": "织梦 STORYWEAVER",
+        "block": true
+      },
+      {
+        "kind": "文案",
+        "value": "夜行档案・都市怪谈",
+        "block": true
+      },
+      {
+        "kind": "色值",
+        "value": "#0E1420",
+        "block": true
+      },
+      {
+        "kind": "色值",
+        "value": "#F2EAD8",
+        "block": true
+      },
+      {
+        "kind": "色值",
+        "value": "#B03A2E",
+        "block": true
+      },
+      {
+        "kind": "色值",
+        "value": "#58C1B2",
+        "block": true
+      },
+      {
+        "kind": "色值",
+        "value": "#BFA05A",
+        "block": true
+      },
+      {
+        "kind": "尺寸",
+        "value": "1440×900",
+        "block": true
+      },
+      {
+        "kind": "必须",
+        "value": "：Hero 主视觉区（品牌文案+开启故事 CTA",
+        "block": false
+      }
+    ],
+    "attachments": [],
+    "skeleton": "app",
+    "title": "为「织梦 STORYWEAVER」AI … · 设计方案",
+    "workdir": "/Users/hyejeongwong/DoubaoWork/chats/2026-10-13/new-chat-1/ai-story-app/ui-design-runs/为织梦STORYWEAV-20261013-011702-8038",
+    "deliverables": {
+      "doc": {
+        "proposal": "doc/proposal.xml",
+        "canvases": [
+          "doc/canvas-a.html",
+          "doc/canvas-b.html"
+        ],
+        "cover": "doc/cover.html",
+        "coverImage": "shots/cover.jpg",
+        "required": true,
+        "note": "设计思路、设计想法、设计语言、为什么这么设计；窄栏排版画布，像一份印出来的专题"
+      },
+      "product": {
+        "path": "app/index.html",
+        "profile": "app-screen",
+        "required": true,
+        "shape": "产品界面",
+        "h5Shape": "产品界面",
+        "note": "**真实产品界面原型**：首屏就是用户日常会看到的那一屏，不是关于它的说明"
+      }
+    },
+    "assetPlan": [
+      {
+        "role": "hero-bg",
+        "how": "image_gen",
+        "slot": "full-bleed",
+        "why": "首屏满版氛围，文字压在上面"
+      },
+      {
+        "role": "icon-set",
+        "how": "svg",
+        "slot": "inline",
+        "why": "图标必须用 SVG——生图出不了透明底"
+      },
+      {
+        "role": "texture",
+        "how": "css",
+        "slot": "layer",
+        "why": "底纹用 CSS 画，不占素材预算"
+      },
+      {
+        "role": "product-01",
+        "how": "image_gen",
+        "slot": "full-bleed",
+        "why": "产品主图，装在满版容器里"
+      },
+      {
+        "role": "product-02",
+        "how": "image_gen",
+        "slot": "full-bleed",
+        "why": "第二视角，和主图不同机位"
+      },
+      {
+        "role": "material-detail",
+        "how": "image_gen",
+        "slot": "full-bleed",
+        "why": "材质微距，讲工艺"
+      },
+      {
+        "role": "map-plate",
+        "how": "image_gen",
+        "slot": "full-bleed",
+        "why": "地图底图当满版背景，路线压在上面"
+      },
+      {
+        "role": "route-visual",
+        "how": "svg",
+        "slot": "layer",
+        "why": "路线/海拔曲线用 SVG——生图画不准"
+      },
+      {
+        "role": "scene-01",
+        "how": "fetch_photos",
+        "slot": "full-bleed",
+        "why": "沿途实景"
+      }
+    ],
+    "minVisualAssets": 5,
+    "frozen": "2026-10-13T01:17:02",
+    "hash": "80564bf2bb67e082"
+  },
+  "style": {
+    "query": "为「织梦 STORYWEAVER」AI 互动叙事游戏桌面端设计高保真首页（剧本大厅）。现有低保真原型信息架构已确认，首页包含：Hero 主视觉区（品牌文案+开启故事 CTA）、分类筛选 Tab（全部/悬疑奇幻/治愈冒险/我的剧本）、继续旅程卡、剧本封面卡片网格、我的剧本区、空状态；侧边栏四导航（剧本大厅/上传剧本/我的旅程/任务手记）。风格方向「夜行档案・都市怪谈」：深夜蓝黑 #0E1420 主背景、档案纸米黄 #F2EAD8 信息载体、警示红 #B03A2E 关键色、荧光青 #58C1B2 线索高亮、暗金 #BFA05A 层级装饰；牛皮纸档案卡/红色印章/打字机文字/雾气霓虹质感；标题衬线+正文黑体。桌面端 1440×900，鼠标键盘操作，hash 路由，所有按钮可点击。要求 ≥8 个真实视觉资产、截图自查。交付：单文件可运行 HTML 高保真原型 + 设计说明。",
+    "signature": {
+      "ground": "dark",
+      "typeVoice": "serif-editorial",
+      "imageWorld": null,
+      "layoutLogic": "long-scroll",
+      "colorStrategy": null,
+      "motionVoice": "type-in"
+    },
+    "why": {
+      "ground": "语义命中 3 个线索",
+      "typeVoice": "语义命中 2 个线索",
+      "imageWorld": "平手：illustration / none 各命中 1 个线索 —— 由你按内容定",
+      "layoutLogic": "语义命中 2 个线索",
+      "colorStrategy": "query 没给这一维的信号 —— 由你按内容定",
+      "motionVoice": "语义命中 2 个线索"
+    },
+    "open": [
+      "imageWorld",
+      "colorStrategy"
+    ],
+    "divergence": {
+      "vsRecent": [
+        1,
+        2,
+        0,
+        3,
+        0
+      ],
+      "min": 0,
+      "require": 3
+    }
+  },
+  "receipts": {
+    "shot": [],
+    "observe": [],
+    "check": [],
+    "publish": [],
+    "read": []
+  },
+  "delivery": null
+}

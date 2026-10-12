@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>织梦 STORYWEAVER - V0.1 低保真交互原型</title>
+<style>
+/* ===== 低保真设计系统 ===== */
+:root {
+  --bg: #ffffff;
+  --bg-gray: #f5f5f5;
+  --bg-gray-light: #fafafa;
+  --border: #d0d0d0;
+  --border-dark: #999;
+  --text: #333;
+  --text-secondary: #666;
+  --text-muted: #999;
+  --wireframe: #e0e0e0;
+  --accent: #4a90d9;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg-gray);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* 原型标注条 */
+.proto-banner {
+  background: #2c3e50;
+  color: #fff;
+  padding: 8px 24px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.proto-banner .badge {
+  background: #e74c3c;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+  margin-right: 8px;
+}
+
+/* 布局 */
+.app-layout {
+  display: flex;
+  min-height: calc(100vh - 33px);
+}
+
+/* 侧边栏 - 线框 */
+.sidebar {
+  width: 200px;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  flex-shrink: 0;
+}
+
+.sidebar-logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.logo-box {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--text);
+  margin-bottom: 8px;
+}
+
+.logo-text {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  border-left: 3px solid transparent;
+}
+
+.nav-item:hover { background: var(--bg-gray-light); }
+.nav-item.active {
+  background: var(--bg-gray);
+  border-left-color: var(--text);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* 主内容 */
+.main-content {
+  flex: 1;
+  padding: 20px 32px;
+  max-width: 1000px;
+}
+
+/* 面包屑 */
+.breadcrumb {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--border);
+}
+
+/* 页面视图 */
+.page-view { display: none; }
+.page-view.active { display: block; }
+
+/* ===== 通用线框组件 ===== */
+/* 按钮 */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid var(--text);
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.btn:hover { background: var(--bg-gray); }
+.btn-primary {
+  background: var(--text);
+  color: #fff;
+}
+.btn-primary:hover { background: #555; }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+
+/* 卡片 */
+.card {
+  background: #fff;
+  border: 1.5px solid var(--border-dark);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* 图片占位框 */
+.img-placeholder {
+  background: var(--wireframe);
+  border: 1px dashed var(--border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid var(--border-dark);
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-right: 4px;
+}
+
+/* 输入框 */
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border-dark);
+  background: #fff;
+  font-size: 13px;
+  font-family: inherit;
+}
+.input:focus { outline: none; border-color: var(--text); }
+
+/* 标题 */
+.h1 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.h2 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.muted { color: var(--text-muted); font-size: 12px; }
+.desc { color: var(--text-secondary); font-size: 13px; line-height: 1.7; }
+
+/* 标注 */
+.annotation {
+  background: #fff8e1;
+  border-left: 3px solid #ffa000;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #8d6e00;
+  margin: 12px 0;
+}
+
+/* ===== P01 剧本大厅 ===== */
+.hero-box {
+  height: 200px;
+  border: 2px solid var(--text);
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 32px;
+  position: relative;
+}
+.hero-box .img-placeholder {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 120px;
+  height: 120px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+}
+
+/* 剧本卡片网格 */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.story-card .card-cover {
+  height: 100px;
+  background: var(--wireframe);
+  border-bottom: 1.5px solid var(--border-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.story-card .card-body {
+  padding: 12px;
+}
+
+.story-card .card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.story-card .card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.story-card .card-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 继续旅程条 */
+.continue-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1.5px solid var(--border-dark);
+  margin-bottom: 24px;
+}
+
+/* 上传横幅 */
+.upload-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border: 2px dashed var(--border-dark);
+  margin-bottom: 24px;
+  background: var(--bg-gray-light);
+}
+
+/* ===== P02 剧本详情 ===== */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.detail-cover {
+  height: 360px;
+  border: 2px solid var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.detail-info .h1 { margin-top: 8px; }
+
+.info-section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border);
+}
+
+/* ===== P03 创建角色 ===== */
+.steps-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.step.done .step-num { background: var(--text); color: #fff; border-color: var(--text); }
+.step.current { color: var(--text); font-weight: 600; }
+.step.current .step-num { border-color: var(--text); border-width: 2px; }
+
+.step-line { width: 40px; height: 1px; background: var(--border-dark); }
+
+.char-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.char-card {
+  padding: 20px;
+  border: 2px solid var(--border-dark);
+  cursor: pointer;
+  position: relative;
+}
+
+.char-card:hover { border-color: var(--text); }
+.char-card.selected {
+  border-color: var(--text);
+  background: var(--bg-gray);
+}
+.char-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-weight: 700;
+}
+
+.char-avatar {
+  width: 48px;
+  height: 48px;
+  border: 1.5px solid var(--border-dark);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* 表单 */
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; margin-bottom: 6px; color: var(--text-secondary); }
+
+/* ===== P04 剧情互动 ===== */
+.interact-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr 160px;
+  gap: 16px;
+}
+
+.side-panel {
+  border: 1.5px solid var(--border-dark);
+  padding: 14px;
+  font-size: 12px;
+}
+
+.side-panel h4 {
+  font-size: 13px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.stage-visual {
+  height: 200px;
+  border: 2px solid var(--text);
+  margin-bottom: 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.scene-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  background: var(--text);
+  color: #fff;
+  font-size: 11px;
+}
+
+.story-text-area {
+  border: 1.5px solid var(--border-dark);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.narrative {
+  padding-left: 12px;
+  border-left: 3px solid var(--border-dark);
+  margin-bottom: 16px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.dialogue {
+  background: var(--bg-gray);
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.dialogue-name { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+
+.quick-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.quick-btn {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border-dark);
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.input-row .input { flex: 1; }
+
+/* ===== P05 结局页 ===== */
+.ending-page {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.ending-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.timeline-box {
+  border: 1.5px solid var(--border-dark);
+  padding: 16px;
+  text-align: left;
+  margin: 24px 0;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 13px;
+}
+
+.timeline-item:last-child { border-bottom: none; }
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-dark);
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.ending-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+/* ===== P06 上传剧本 ===== */
+.upload-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+textarea.input {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* ===== 异常状态 ===== */
+.state-page {
+  max-width: 400px;
+  margin: 60px auto;
+  text-align: center;
+}
+
+.state-icon {
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--border-dark);
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--text-muted);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 10px 20px;
+  background: var(--text);
+  color: #fff;
+  font-size: 13px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all 0.25s;
+  z-index: 999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* 页面切换动画 */
+.page-view { animation: fadeIn 0.2s ease; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- 原型标注条 -->
+<div class="proto-banner">
+  <div><span class="badge">LOW-FIDELITY</span>织梦 STORYWEAVER V0.1 低保真可交互原型</div>
+  <div>点击任意按钮/卡片可跳转流程</div>
+</div>
+
+<div class="app-layout">
+
+  <!-- 侧边栏 -->
+  <aside class="sidebar">
+    <div style="padding: 0 20px 16px; border-bottom: 1px solid var(--border); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+      <div style="width: 28px; height: 28px; border: 2px solid var(--text); transform: rotate(45deg); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <div style="width: 10px; height: 10px; background: var(--text); transform: rotate(45deg);"></div>
+      </div>
+      <div>
+        <div style="font-size: 15px; font-weight: 700; letter-spacing: 1px;">剧本杀</div>
+        <div style="font-size: 9px; color: var(--text-muted); letter-spacing: 2px;">JUBENSHA</div>
+      </div>
+    </div>
+
+    <div style="padding: 0 20px 8px; font-size: 11px; color: var(--text-muted);">你的故事世界</div>
+
+    <div class="nav-item active" data-page="hall">
+      <div class="nav-icon"></div>
+      剧本大厅
+    </div>
+    <div class="nav-item" data-page="upload">
+      <div class="nav-icon"></div>
+      上传剧本
+    </div>
+    <div class="nav-item" data-page="ending">
+      <div class="nav-icon"></div>
+      我的旅程
+    </div>
+    <div class="nav-item" data-page="notes">
+      <div class="nav-icon"></div>
+      任务手记
+    </div>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+
+    <!-- ===== P01 剧本大厅 ===== -->
+    <div class="page-view active" id="page-hall">
+      <div class="breadcrumb">故事世界 / 剧本大厅</div>
+
+      <div class="annotation">【页面目标】发现并选择可玩内容。双链路入口：官方剧本浏览 + 用户上传剧本。</div>
+
+      <!-- Hero Banner -->
+      <div class="hero-box">
+        <div class="h1">走进故事，成为命运的执笔人</div>
+        <p class="desc" style="margin-bottom: 16px;">在光与影交织的世界，与 AI 角色相遇。用你的每一次选择，写下独一无二的下一章。</p>
+        <button class="btn btn-primary" style="align-self: flex-start;" onclick="goToPage('detail')">开启我的故事 →</button>
+        <div class="img-placeholder">封面图位</div>
+      </div>
+
+      <!-- 区块标题 + 筛选 -->
+      <div class="section-header">
+        <div class="h2">选择你的世界</div>
+        <div class="filter-row" id="storyTabs">
+          <button class="btn btn-sm tab-btn active" data-tab="all" onclick="switchTab('all')">全部剧本</button>
+          <button class="btn btn-sm tab-btn" data-tab="mystery" onclick="switchTab('mystery')">悬疑奇幻</button>
+          <button class="btn btn-sm tab-btn" data-tab="heal" onclick="switchTab('heal')">治愈冒险</button>
+          <button class="btn btn-sm tab-btn" data-tab="mine" onclick="switchTab('mine')">我的剧本</button>
+        </div>
+      </div>
+
+      <!-- 继续旅程（全部/悬疑/治愈tab下显示） -->
+      <div class="continue-bar" id="continueBar" onclick="goToPage('interact')" style="cursor: pointer;">
+        <div style="width: 32px; height: 32px; border: 1.5px solid var(--border-dark); flex-shrink: 0;"></div>
+        <div style="flex: 1;">
+          <div style="font-weight: 600; font-size: 13px;">你的故事，还在等你续写</div>
+          <div class="muted">月隐来信 · 第1章 · 上次游玩 2026/10/12</div>
+        </div>
+        <span style="font-size: 12px; color: var(--text-secondary);">继续旅程 →</span>
+      </div>
+
+      <!-- 我的剧本tab专属：上传入口 + 我的剧本列表 -->
+      <div id="minePanel" style="display: none;">
+        <div class="upload-banner" onclick="goToPage('upload')" style="cursor: pointer;">
+          <span><strong>+ 创建新剧本</strong></span>
+          <span class="muted">让自己的故事成为下一个世界</span>
+        </div>
+
+        <div class="section-header" style="margin-top: 20px;">
+          <div class="h3">我上传的剧本</div>
+        </div>
+
+        <div class="story-grid">
+          <div class="story-card card" onclick="goToPage('detail')" style="cursor: pointer;">
+            <div class="card-cover">封面图</div>
+            <div class="card-body">
+              <div class="card-title">月隐来信（我的）</div>
+              <div class="card-desc">我改编的版本，加入了新的支线角色。</div>
+              <div class="card-meta">
+                <span>草稿</span>
+                <span>进行中</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 剧本卡片列表（全部/悬疑/治愈tab下显示） -->
+      <div class="story-grid" id="storyGrid">
+        <div class="story-card card story-item" data-category="mystery" onclick="goToPage('detail')" style="cursor: pointer;">
+          <div class="card-cover">封面图</div>
+          <div class="card-body">
+            <div class="card-title">月隐来信</div>
+            <div class="card-desc">一封没有署名的来信，引你走入月色下的雾港。</div>
+            <div class="card-meta">
+              <span>3章节</span>
+              <span>约45分钟</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card card story-item" data-category="heal" onclick="showToast('林海迷途：即将开放')">
+          <div class="card-cover">封面图</div>
+          <div class="card-body">
+            <div class="card-title">林海迷途</div>
+            <div class="card-desc">误入千年古林，与会说话的白鹿同行。</div>
+            <div class="card-meta">
+              <span>2章节</span>
+              <span>约30分钟</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-card card story-item" data-category="mystery" onclick="showToast('星落酒馆：即将开放')">
+          <div class="card-cover">封面图</div>
+          <div class="card-body">
+            <div class="card-title">星落酒馆</div>
+            <div class="card-desc">深夜的酒馆里，每一杯酒都藏着一个故事。</div>
+            <div class="card-meta">
+              <span>4章节</span>
+              <span>约60分钟</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 空状态（我的剧本为空时显示，预留） -->
+      <div id="emptyState" style="display: none; text-align: center; padding: 60px 20px;">
+        <div style="width: 64px; height: 64px; border: 2px solid var(--border-dark); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: var(--text-muted);">∅</div>
+        <div class="h3">还没有上传剧本</div>
+        <p class="desc" style="margin: 8px 0 20px;">创建你的第一个剧本，让故事开始流动。</p>
+        <button class="btn btn-primary btn-sm" onclick="goToPage('upload')">开始创作</button>
+      </div>
+    </div>
+
+    <!-- ===== P02 剧本详情 ===== -->
+    <div class="page-view" id="page-detail">
+      <div class="breadcrumb">
+        <a onclick="goToPage('hall')" style="cursor: pointer; color: var(--text-secondary);">故事世界</a> / 剧本详情
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <a onclick="goToPage('hall')" style="cursor: pointer; font-size: 12px; color: var(--text-secondary);">← 返回剧本大厅</a>
+      </div>
+
+      <div class="annotation">【页面目标】理解剧情与体验边界。展示故事背景、旅伴角色、内容提示与预计时长。</div>
+
+      <div class="detail-layout">
+        <div class="detail-cover">
+          [ 剧本封面图 ]
+        </div>
+
+        <div class="detail-info">
+          <div class="muted">OFFICIAL STORY</div>
+          <div class="h1">月隐来信</div>
+          <div style="margin-bottom: 16px;">
+            <span class="tag">悬疑</span>
+            <span class="tag">奇幻</span>
+            <span class="tag">命运抉择</span>
+          </div>
+
+          <p class="desc" style="margin-bottom: 20px;">一封没有署名的来信，引你走入月色下的雾港。当午夜钟声响起，被遗忘的秘密将再度苏醒。</p>
+
+          <div class="info-section">
+            <div class="h3">故事背景</div>
+            <p class="desc">雨停了，雾港的石阶上还留着微光。你按照信中的地址来到钟塔，门前站着一位披着深色外衣的守钟人。他看了一眼你手中的信，神情忽然变了。</p>
+          </div>
+
+          <div class="info-section">
+            <div class="h3">你的旅伴</div>
+            <p class="desc"><b>沈夜 · 守钟人</b><br>一位与你对话、同行，也会被你的选择改变的角色。</p>
+          </div>
+
+          <div class="muted" style="margin-bottom: 20px;">
+            3个章节 · 每章3种选择 · 完整故事结局 · 自动保存
+          </div>
+
+          <button class="btn btn-primary" onclick="goToPage('character')" style="width: 100%; padding: 14px;">
+            选择角色，进入故事 →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== P03 创建角色 ===== -->
+    <div class="page-view" id="page-character">
+      <div class="breadcrumb">
+        <a onclick="goToPage('detail')" style="cursor: pointer; color: var(--text-secondary);">故事世界</a> / 创建角色
+      </div>
+
+      <div style="text-align: center; margin: 20px 0 8px;">
+        <div class="h1">你将以谁的身份，走入故事？</div>
+        <p class="desc">选择你的角色，赋予 TA 一个属于你的名字。</p>
+      </div>
+
+      <div class="steps-bar">
+        <div class="step done"><div class="step-num">✓</div>选择剧本</div>
+        <div class="step-line"></div>
+        <div class="step current"><div class="step-num">2</div>创建角色</div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">3</div>开启故事</div>
+      </div>
+
+      <div class="annotation">【交互】左右/点击切换角色卡片。选中后下方表单自动填充对应角色信息。</div>
+
+      <div class="char-cards">
+        <div class="char-card selected" onclick="selectChar(this)">
+          <div class="char-avatar">头像</div>
+          <div class="h3">林知微</div>
+          <p class="desc">归乡的调查员</p>
+          <div class="muted">冷静敏锐 · 寻找失踪的父亲</div>
+        </div>
+
+        <div class="char-card" onclick="selectChar(this)">
+          <div class="char-avatar">头像</div>
+          <div class="h3">顾青禾</div>
+          <p class="desc">失忆的旅人</p>
+          <div class="muted">勇敢直率 · 寻找自己的来历</div>
+        </div>
+      </div>
+
+      <!-- 角色设定表单 -->
+      <div style="border: 1.5px solid var(--border-dark); padding: 20px; margin-bottom: 16px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>角色姓名</label>
+            <input type="text" class="input" value="林知微">
+          </div>
+          <div class="form-group">
+            <label>角色性格</label>
+            <select class="input">
+              <option>遵循角色原设定</option>
+              <option>冷静内敛</option>
+              <option>热情外向</option>
+            </select>
+          </div>
+        </div>
+        <div class="muted">身份：归乡的调查员 · 背景：寻找失踪的父亲</div>
+      </div>
+
+      <!-- 形象选择 -->
+      <div style="border: 2px solid var(--text); padding: 16px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+          <span style="font-weight: 600; font-size: 13px;">角色形象 · 全剧统一</span>
+          <span class="muted">可选</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+          <div class="btn appearance-opt selected" style="text-align: center;" onclick="selectAppearance(this)">剧本原设定</div>
+          <div class="btn appearance-opt" style="text-align: center;" onclick="selectAppearance(this)">本人照片</div>
+          <div class="btn appearance-opt" style="text-align: center;" onclick="selectAppearance(this)">按喜好生成</div>
+        </div>
+        <div class="muted" style="margin-top: 10px;">选用原作角色形象，或按你的喜好重新设计外观。</div>
+      </div>
+
+      <div style="text-align: center;">
+        <button class="btn btn-primary" onclick="goToPage('interact')" style="padding: 14px 40px;">
+          确认角色，开启故事 →
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== P04 剧情互动 ===== -->
+    <div class="page-view" id="page-interact">
+      <div class="breadcrumb">
+        <a onclick="goToPage('hall')" style="cursor: pointer; color: var(--text-secondary);">故事世界</a> / 正在进行的故事
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <a onclick="goToPage('hall')" style="cursor: pointer; font-size: 12px; color: var(--text-secondary);">← 保存并返回大厅</a>
+      </div>
+
+      <div class="annotation">【核心页面】左：角色信息栏 / 中：场景图+场景描述+选择选项 / 右：任务手记（选择式推演，无对话输入）</div>
+
+      <div class="interact-layout" style="grid-template-columns: 160px 1fr 200px; gap: 20px;">
+        <!-- 左栏 -->
+        <div class="side-panel">
+          <div style="height: 60px; border: 1px dashed var(--border-dark); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted);">旅伴头像</div>
+          <h4>沈夜</h4>
+          <div class="muted" style="margin-bottom: 12px;">守钟人 · 与你同行</div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">剧情进度 0%</div>
+          <div style="height: 4px; background: var(--wireframe); margin-bottom: 12px;"></div>
+
+          <div style="line-height: 2;">
+            <div>你扮演：林知微</div>
+            <div class="muted">归乡的调查员</div>
+            <div class="muted">遵循角色原设定</div>
+          </div>
+        </div>
+
+        <!-- 中栏 -->
+        <div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 12px;">
+            <span><b>月隐来信</b> / 来信之谜</span>
+            <span class="muted">第 1 / 3 章</span>
+          </div>
+
+          <div class="stage-visual" style="height: 280px;">
+            <div class="scene-tag">雾港 · 钟塔门前</div>
+            [ 场景分镜图 ]
+          </div>
+
+          <div class="story-text-area" style="margin-top: 16px; border: none; border-top: 1px solid var(--border); border-radius: 0; padding: 16px 0;">
+            <div class="muted" style="margin-bottom: 4px;">当前分镜 · 01</div>
+            <div class="h3" style="margin-bottom: 12px;">钟塔前的初次相遇</div>
+
+            <div class="narrative" style="border-left: none; padding-left: 0;">
+              雨停了，雾港的石阶上还留着微光。你按照信中的地址来到钟塔，门前站着一位披着深色外衣的守钟人。他看了一眼你手中的信，神情忽然变了。
+            </div>
+          </div>
+
+          <div style="border: 1.5px solid var(--text); padding: 16px; margin-top: 8px;">
+            <div class="muted" style="margin-bottom: 10px; text-align: center;">— 你要怎么做？ —</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <button class="btn" onclick="showToast('选择：询问信的来历')">询问信的来历</button>
+              <button class="btn" onclick="showToast('选择：问他怎么认识自己')">问他怎么认识自己</button>
+              <button class="btn" onclick="showToast('选择：直接问月钥是什么')">直接问月钥是什么</button>
+              <button class="btn" onclick="showToast('选择：观察周围环境')">观察周围环境</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右栏：任务手记 -->
+        <div style="border: 1px solid var(--border); padding: 16px; background: var(--bg-gray-light); border-radius: 4px; align-self: start; position: sticky; top: 20px;">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 16px; font-weight: 600; font-size: 14px;">
+            <div style="width: 14px; height: 14px; border: 1.5px solid var(--text);"></div>
+            任务手记
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">当前任务</div>
+          <div style="margin-bottom: 16px; font-size: 13px; line-height: 1.6;">
+            ◇ 问清来信的秘密，寻找月钥
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">已知线索</div>
+          <div style="margin-bottom: 16px; font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
+            故事才刚开始，<br/>等待你发现第一条线索。
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">你所在的场景</div>
+          <div style="margin-bottom: 16px; font-size: 13px; line-height: 1.6;">
+            雾港 · 钟塔门前
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">你与场景的关系</div>
+          <div style="margin-bottom: 16px; font-size: 13px; line-height: 1.6;">
+            肩后视角 · 你正走入钟塔
+          </div>
+
+          <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">关键选择</div>
+          <div style="margin-bottom: 20px; font-size: 12px; line-height: 1.6; color: var(--text-secondary);">
+            ◇ 上下文记忆随进度保存
+          </div>
+
+          <button class="btn btn-sm" style="width: 100%; padding: 10px; font-size: 12px;" onclick="showToast('打开反馈表单（原型演示）')">
+            反馈剧情问题
+          </button>
+        </div>
+      </div>
+
+      <!-- 左下角实时保存提示 -->
+      <div style="position: fixed; bottom: 20px; left: 240px; display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: var(--bg-card, #fff); border: 1px solid var(--border-dark); border-radius: 20px; font-size: 12px; color: var(--text-secondary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); z-index: 50;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--success, #4a7c59);"></div>
+        已自动保存进度
+        <span style="color: var(--text-muted); font-size: 11px;" id="saveTime">刚刚</span>
+      </div>
+    </div>
+    <div class="page-view" id="page-journey">
+      <div class="breadcrumb">故事世界 / 我的旅程</div>
+
+      <div class="annotation">【按剧本维度】展示已玩过的剧本，每个可继续或重新开始。</div>
+
+      <div class="h2" style="margin-top: 20px;">我的旅程</div>
+      <p class="desc" style="margin-bottom: 24px;">你走过的每一段故事，都留在这里。</p>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+
+        <!-- 剧本1：进行中 -->
+        <div class="card" style="padding: 20px; display: flex; align-items: center; gap: 16px;">
+          <div style="width: 60px; height: 60px; border: 1.5px solid var(--border-dark); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted);">封面</div>
+          <div style="flex: 1;">
+            <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">月隐来信</div>
+            <div class="muted" style="margin-bottom: 8px;">第 1/3 章 · 上次游玩 2026/10/12</div>
+            <div style="height: 4px; width: 120px; background: var(--wireframe); border-radius: 2px;">
+              <div style="height: 100%; width: 33%; background: var(--text); border-radius: 2px;"></div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-sm" onclick="goToPage('interact')">继续旅程</button>
+            <button class="btn btn-sm" onclick="goToPage('detail')">重新开始</button>
+          </div>
+        </div>
+
+        <!-- 剧本2：已完成 -->
+        <div class="card" style="padding: 20px; display: flex; align-items: center; gap: 16px;">
+          <div style="width: 60px; height: 60px; border: 1.5px solid var(--border-dark); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-muted);">封面</div>
+          <div style="flex: 1;">
+            <div style="font-weight: 600; font-size: 15px; margin-bottom: 4px;">林海迷途</div>
+            <div class="muted" style="margin-bottom: 8px;">已通关 · 结局：白鹿引路 · 3 种结局已解锁 1 种</div>
+            <div style="height: 4px; width: 120px; background: var(--wireframe); border-radius: 2px;">
+              <div style="height: 100%; width: 100%; background: var(--success); border-radius: 2px;"></div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-sm" onclick="goToPage('ending')">查看结局</button>
+            <button class="btn btn-sm" onclick="goToPage('detail')">重新开始</button>
+          </div>
+        </div>
+
+        <!-- 空状态提示 -->
+        <div class="card" style="padding: 24px; text-align: center; border-style: dashed;">
+          <div class="muted" style="margin-bottom: 12px;">还没有其他旅程了</div>
+          <button class="btn btn-sm" onclick="goToPage('hall')">去剧本大厅逛逛</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== P05 结局页 ===== -->
+    <div class="page-view" id="page-ending">
+      <div class="breadcrumb">
+        <a onclick="goToPage('hall')" style="cursor: pointer; color: var(--text-secondary);">故事世界</a> / 结局
+      </div>
+
+      <div class="ending-page">
+        <div class="muted" style="margin-bottom: 8px;">THE ENDING</div>
+        <div class="ending-title serif">月隐之夜的抉择</div>
+        <p class="desc">
+          午夜钟声敲响最后一响，你将月钥放回了钟塔的机关中。雾港的雾气渐渐散去，月光重新洒在石阶上。
+        </p>
+
+        <div class="timeline-box">
+          <div class="h3">你的关键选择回顾</div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>在钟塔前，你选择了先询问信的来历。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>进入钟塔后，你选择相信沈夜的指引。</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>最终抉择时，你选择将月钥归位，守护雾港的秘密。</div>
+          </div>
+        </div>
+
+        <div class="ending-actions">
+          <button class="btn btn-primary" onclick="goToPage('character')">重新开始</button>
+          <button class="btn" onclick="goToPage('hall')">返回剧本大厅</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== P06 上传/编写剧本 ===== -->
+    <div class="page-view" id="page-upload">
+      <div class="breadcrumb">
+        <a onclick="goToPage('hall')" style="cursor: pointer; color: var(--text-secondary);">故事世界</a> / 上传剧本
+      </div>
+
+      <div style="text-align: center; margin: 24px 0;">
+        <div class="h1">写下你的故事世界</div>
+        <p class="desc">创建属于你的剧本，让其他旅人也能走进你的世界。</p>
+      </div>
+
+      <div class="annotation">【链路二入口】用户自编剧本，填写基础信息后进入角色选择流程。</div>
+
+      <div class="upload-form">
+        <div class="form-group">
+          <label>剧本标题</label>
+          <input type="text" class="input" value="月隐来信">
+        </div>
+
+        <div class="form-group">
+          <label>题材标签</label>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="tag topic-tag selected" style="cursor: pointer; padding: 6px 12px;" onclick="toggleTopic(this)">悬疑</span>
+            <span class="tag topic-tag selected" style="cursor: pointer; padding: 6px 12px;" onclick="toggleTopic(this)">奇幻</span>
+            <span class="tag topic-tag" style="cursor: pointer; padding: 6px 12px;" onclick="toggleTopic(this)">治愈</span>
+            <span class="tag topic-tag" style="cursor: pointer; padding: 6px 12px;" onclick="toggleTopic(this)">冒险</span>
+            <span class="tag topic-tag" style="cursor: pointer; padding: 6px 12px;" onclick="toggleTopic(this)">都市</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>故事简介</label>
+          <textarea class="input">一封没有署名的来信，引你走入月色下的雾港。当午夜钟声响起，被遗忘的秘密将再度苏醒。</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>故事背景</label>
+          <textarea class="input">雨停了，雾港的石阶上还留着微光。你按照信中的地址来到钟塔，门前站着一位披着深色外衣的守钟人。</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>初始场景描述</label>
+          <textarea class="input">钟塔门前，雨夜初歇。守钟人沈夜站在石阶上等你，手中握着一盏昏黄的灯笼。</textarea>
+        </div>
+
+        <div style="text-align: center; margin-top: 24px;">
+          <button class="btn btn-primary" onclick="goToPage('processing')" style="padding: 14px 32px;">
+            保存草稿，开始分析 →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== P06.5 上传中·动态分析 ===== -->
+    <div class="page-view" id="page-processing">
+      <div class="breadcrumb">
+        <a onclick="goToPage('upload')" style="cursor: pointer; color: var(--text-secondary);">故事世界</a> / 上传剧本
+      </div>
+
+      <div style="max-width: 480px; margin: 60px auto; text-align: center;">
+        <div class="muted" style="margin-bottom: 8px;">AI 正在解析你的剧本</div>
+        <div class="h2" style="margin-bottom: 8px;">月隐来信</div>
+        <p class="desc" style="margin-bottom: 32px;">正在提取角色、构建场景、生成剧情线...</p>
+
+        <!-- 进度条 -->
+        <div style="height: 6px; background: var(--wireframe); border-radius: 3px; overflow: hidden; margin-bottom: 24px;">
+          <div id="progressBar" style="height: 100%; width: 0%; background: var(--text); transition: width 0.5s;"></div>
+        </div>
+        <div class="muted" id="progressText" style="margin-bottom: 32px;">0%</div>
+
+        <!-- 步骤列表 -->
+        <div style="text-align: left; border: 1.5px solid var(--border-dark); border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+          <div class="proc-step" id="step-1" style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+            <div class="step-dot" style="width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted);">1</div>
+            <span style="font-size: 13px; color: var(--text-secondary);">解析剧本文本结构</span>
+          </div>
+          <div class="proc-step" id="step-2" style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+            <div class="step-dot" style="width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted);">2</div>
+            <span style="font-size: 13px; color: var(--text-secondary);">提取角色与人物关系</span>
+          </div>
+          <div class="proc-step" id="step-3" style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+            <div class="step-dot" style="width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted);">3</div>
+            <span style="font-size: 13px; color: var(--text-secondary);">构建场景与分镜</span>
+          </div>
+          <div class="proc-step" id="step-4" style="display: flex; align-items: center; gap: 10px; padding: 8px 0;">
+            <div class="step-dot" style="width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--border-dark); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted);">4</div>
+            <span style="font-size: 13px; color: var(--text-secondary);">生成剧情分支线</span>
+          </div>
+        </div>
+
+        <div class="muted" style="font-size: 12px;">预计还需 3-5 秒，完成后自动进入角色选择</div>
+        <div style="margin-top: 16px;">
+          <a onclick="goToPage('upload')" style="font-size: 12px; color: var(--text-muted); cursor: pointer;">取消并返回编辑</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== P07 任务手记（独立页） ===== -->
+    <div class="page-view" id="page-notes">
+      <div class="breadcrumb">
+        <a onclick="goToPage('hall')" style="cursor: pointer; color: var(--text-secondary);">故事世界</a> / 任务手记
+      </div>
+
+      <div class="annotation">【按剧本维度存储】每个剧本独立保存任务手记，切换剧本查看对应内容。</div>
+
+      <div style="display: grid; grid-template-columns: 200px 1fr; gap: 20px; margin-top: 20px;">
+
+        <!-- 左侧剧本列表 -->
+        <div class="side-panel" style="height: fit-content;">
+          <h4>我的剧本</h4>
+
+          <div id="story-1" style="padding: 10px; border: 1.5px solid var(--text); background: var(--bg-gray); margin-bottom: 8px; cursor: pointer;" onclick="switchStory(1)">
+            <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">月隐来信</div>
+            <div class="muted" style="font-size: 11px;">第 1/3 章 · 33%</div>
+          </div>
+
+          <div id="story-2" style="padding: 10px; border: 1px solid var(--border-dark); margin-bottom: 8px; cursor: pointer;" onclick="switchStory(2)">
+            <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">林海迷途</div>
+            <div class="muted" style="font-size: 11px;">未开始</div>
+          </div>
+
+          <div id="story-3" style="padding: 10px; border: 1px solid var(--border-dark); cursor: pointer;" onclick="switchStory(3)">
+            <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">星落酒馆</div>
+            <div class="muted" style="font-size: 11px;">第 2/4 章 · 50%</div>
+          </div>
+        </div>
+
+        <!-- 右侧手记详情 -->
+        <div class="side-panel" style="font-size: 13px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border);">
+            <h4 id="notesTitle" style="margin: 0; border: none; padding: 0;">月隐来信 · 任务手记</h4>
+            <span class="muted">自动保存 · 本地存储</span>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <div class="muted" style="margin-bottom: 6px; font-size: 11px;">▎当前任务</div>
+            <div id="notesTask" style="padding-left: 12px;">问清来信的秘密，寻找月钥</div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <div class="muted" style="margin-bottom: 6px; font-size: 11px;">▎已知线索</div>
+            <div id="notesClues" style="padding-left: 12px; line-height: 2;">
+              <div>• 信纸来自十年前的钟塔</div>
+              <div>• 守钟人沈夜似乎认识写信人</div>
+              <div class="muted">• 等待你发现下一条线索...</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <div class="muted" style="margin-bottom: 6px; font-size: 11px;">▎所在场景</div>
+            <div id="notesScene" style="padding-left: 12px;"><b>雾港 · 钟塔门前</b></div>
+          </div>
+
+          <div style="margin-bottom: 24px;">
+            <div class="muted" style="margin-bottom: 6px; font-size: 11px;">▎关键选择时间线</div>
+            <div id="notesTimeline" style="padding-left: 12px;">
+              <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--text);"></div>
+                <div><b>第 1 章</b> · 选择先询问信的来历</div>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--border-dark);"></div>
+                <div class="muted">第 2 章 · 待推进</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-sm" onclick="goToPage('interact')">继续故事</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== 异常：空状态 ===== -->
+    <div class="page-view" id="page-empty">
+      <div class="state-page">
+        <div class="state-icon">∅</div>
+        <div class="h2">还没有剧本</div>
+        <p class="desc" style="margin-bottom: 20px;">这里空空如也。创建你的第一个剧本，让故事开始流动。</p>
+        <button class="btn btn-primary" onclick="goToPage('upload')">开始创作</button>
+      </div>
+    </div>
+
+    <!-- ===== 异常：审核拦截 ===== -->
+    <div class="page-view" id="page-blocked">
+      <div class="state-page">
+        <div class="state-icon" style="border-color: #e74c3c; color: #e74c3c;">!</div>
+        <div class="h2">内容审核未通过</div>
+        <p class="desc" style="margin-bottom: 20px;">
+          你输入的内容包含不符合社区规范的信息，已被拦截。请调整后再试。
+        </p>
+        <button class="btn" onclick="goToPage('interact')">返回故事</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// 页面路由
+function goToPage(pageId) {
+  document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById('page-' + pageId);
+  if (target) {
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // 更新侧边栏
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const navMap = {
+    'hall': 'hall', 'upload': 'upload', 'journey': 'ending', 'notes': 'notes'
+  };
+  if (navMap[pageId]) {
+    const nav = document.querySelector(`.nav-item[data-page="${navMap[pageId]}"]`);
+    if (nav) nav.classList.add('active');
+  }
+
+  // 进入上传分析页时启动动画
+  if (pageId === 'processing') {
+    startProcessing();
+  }
+}
+
+// 上传分析动画
+let procTimer = null;
+function startProcessing() {
+  if (procTimer) clearInterval(procTimer);
+
+  const bar = document.getElementById('progressBar');
+  const text = document.getElementById('progressText');
+  let progress = 0;
+
+  // 重置步骤状态
+  for (let i = 1; i <= 4; i++) {
+    const step = document.getElementById('step-' + i);
+    const dot = step.querySelector('.step-dot');
+    dot.style.background = '';
+    dot.style.color = '';
+    dot.style.borderColor = '';
+    dot.textContent = i;
+    step.querySelector('span').style.color = 'var(--text-secondary)';
+  }
+  bar.style.width = '0%';
+  text.textContent = '0%';
+
+  procTimer = setInterval(() => {
+    progress += Math.random() * 8 + 3;
+    if (progress > 100) progress = 100;
+
+    bar.style.width = progress + '%';
+    text.textContent = Math.floor(progress) + '%';
+
+    // 更新步骤状态
+    const currentStep = Math.ceil(progress / 25);
+    for (let i = 1; i <= 4; i++) {
+      const step = document.getElementById('step-' + i);
+      const dot = step.querySelector('.step-dot');
+      if (i < currentStep || progress >= 100) {
+        dot.style.background = 'var(--text)';
+        dot.style.color = '#fff';
+        dot.textContent = '✓';
+        step.querySelector('span').style.color = 'var(--text)';
+      } else if (i === currentStep) {
+        dot.style.borderColor = 'var(--text)';
+        step.querySelector('span').style.color = 'var(--text)';
+      } else {
+        dot.style.background = '';
+        dot.style.color = '';
+        dot.style.borderColor = '';
+        dot.textContent = i;
+        step.querySelector('span').style.color = 'var(--text-secondary)';
+      }
+    }
+
+    if (progress >= 100) {
+      clearInterval(procTimer);
+      setTimeout(() => {
+        showToast('分析完成，进入角色选择');
+        goToPage('character');
+      }, 800);
+    }
+  }, 300);
+}
+
+// 侧边栏导航
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const page = item.dataset.page;
+    if (page === 'notes') {
+      goToPage('notes');
+      return;
+    }
+    if (page === 'ending') {
+      goToPage('journey');
+      return;
+    }
+    goToPage(page);
+  });
+});
+
+// 角色选择
+function selectChar(card) {
+  document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+}
+
+// 快捷行动
+function quickAct(btn) {
+  document.getElementById('storyInput').value = btn.textContent;
+  document.getElementById('storyInput').focus();
+}
+
+// 发送行动
+function sendAction() {
+  const input = document.getElementById('storyInput');
+  if (!input.value.trim()) {
+    showToast('请先写下你的行动');
+    return;
+  }
+  showToast('AI 回应已生成（原型演示）');
+  input.value = '';
+}
+
+// 题材标签多选切换
+function toggleTopic(el) {
+  el.classList.toggle('selected');
+  if (el.classList.contains('selected')) {
+    el.style.background = 'var(--text)';
+    el.style.color = '#fff';
+    el.style.borderColor = 'var(--text)';
+  } else {
+    el.style.background = '';
+    el.style.color = '';
+    el.style.borderColor = '';
+  }
+}
+
+// 形象选项切换
+function selectAppearance(el) {
+  document.querySelectorAll('.appearance-opt').forEach(opt => {
+    opt.classList.remove('selected');
+    opt.style.background = '#fff';
+    opt.style.color = 'var(--text)';
+  });
+  el.classList.add('selected');
+  el.style.background = 'var(--text)';
+  el.style.color = '#fff';
+}
+
+// 首页tab切换
+function switchTab(tab) {
+  // 更新tab选中态
+  document.querySelectorAll('#storyTabs .tab-btn').forEach(btn => {
+    if (btn.dataset.tab === tab) {
+      btn.style.background = 'var(--text)';
+      btn.style.color = '#fff';
+      btn.style.borderColor = 'var(--text)';
+    } else {
+      btn.style.background = '#fff';
+      btn.style.color = 'var(--text)';
+      btn.style.borderColor = 'var(--border-dark)';
+    }
+  });
+
+  // 控制各面板显示
+  const grid = document.getElementById('storyGrid');
+  const continueBar = document.getElementById('continueBar');
+  const minePanel = document.getElementById('minePanel');
+  const emptyState = document.getElementById('emptyState');
+
+  if (tab === 'mine') {
+    // 我的剧本tab：显示上传入口 + 我的剧本，隐藏官方列表和继续条
+    grid.style.display = 'none';
+    continueBar.style.display = 'none';
+    minePanel.style.display = 'block';
+    emptyState.style.display = 'none';
+  } else {
+    // 官方剧本tab：显示列表和继续条，隐藏我的面板
+    minePanel.style.display = 'none';
+    emptyState.style.display = 'none';
+    continueBar.style.display = tab === 'all' ? 'flex' : 'none';
+    grid.style.display = 'grid';
+
+    // 按分类过滤卡片
+    document.querySelectorAll('.story-item').forEach(item => {
+      if (tab === 'all' || item.dataset.category === tab) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+}
+
+// 剧本手记数据
+const storyData = {
+  1: {
+    title: '月隐来信 · 任务手记',
+    task: '问清来信的秘密，寻找月钥',
+    clues: [
+      '信纸来自十年前的钟塔',
+      '守钟人沈夜似乎认识写信人',
+      '等待你发现下一条线索...'
+    ],
+    scene: '<b>雾港 · 钟塔门前</b>',
+    timeline: [
+      { done: true, text: '<b>第 1 章</b> · 选择先询问信的来历' },
+      { done: false, text: '第 2 章 · 待推进' }
+    ]
+  },
+  2: {
+    title: '林海迷途 · 任务手记',
+    task: '故事尚未开始',
+    clues: [
+      '还没有线索，进入故事后自动记录。'
+    ],
+    scene: '—',
+    timeline: [
+      { done: false, text: '第 1 章 · 待开启' }
+    ]
+  },
+  3: {
+    title: '星落酒馆 · 任务手记',
+    task: '找出今晚的神秘客人是谁',
+    clues: [
+      '3号桌的客人点了十年前的老酒',
+      '他腰间挂着一枚奇怪的铜钥匙',
+      '老板娘似乎认识他，但不肯说'
+    ],
+    scene: '<b>星落酒馆 · 吧台内侧</b>',
+    timeline: [
+      { done: true, text: '<b>第 1 章</b> · 选择先观察客人而不是直接搭话' },
+      { done: true, text: '<b>第 2 章</b> · 选择帮老板娘收拾桌子套近乎' },
+      { done: false, text: '第 3 章 · 待推进' }
+    ]
+  }
+};
+
+// 切换剧本手记
+function switchStory(id) {
+  // 更新选中态
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById('story-' + i);
+    if (i === id) {
+      el.style.border = '1.5px solid var(--text)';
+      el.style.background = 'var(--bg-gray)';
+    } else {
+      el.style.border = '1px solid var(--border-dark)';
+      el.style.background = 'transparent';
+    }
+  }
+
+  const data = storyData[id];
+  document.getElementById('notesTitle').textContent = data.title;
+  document.getElementById('notesTask').textContent = data.task;
+
+  const cluesEl = document.getElementById('notesClues');
+  cluesEl.innerHTML = data.clues.map((c, i) => {
+    const isLast = i === data.clues.length - 1 && !c.includes('等待') && !c.includes('还没有');
+    return `<div class="${isLast ? 'muted' : ''}">• ${c}</div>`;
+  }).join('');
+
+  document.getElementById('notesScene').innerHTML = data.scene;
+
+  const tlEl = document.getElementById('notesTimeline');
+  tlEl.innerHTML = data.timeline.map(t => `
+    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 8px;">
+      <div style="width: 8px; height: 8px; border-radius: 50%; ${t.done ? 'background: var(--text);' : 'border: 1.5px solid var(--border-dark);'}"></div>
+      <div class="${t.done ? '' : 'muted'}">${t.text}</div>
+    </div>
+  `).join('');
+}
+
+// Toast
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+</script>
+
+</body>
+</html>
