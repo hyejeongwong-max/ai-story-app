@@ -36,6 +36,7 @@
   /* ── 视图渲染：按 mode 驱动 #/play ─────────────────── */
   function renderView(data) {
     current = data;
+    pendingBranch = null;
 
     // 章节与场景
     $('playChapter').textContent = data.scene_title || '档案 · 未命名场景';
@@ -62,7 +63,6 @@
     const optBox = $('optBox');
     const invBox = $('invBox');
     const continueBtn = $('continueBtn');
-    const hasEvents = data.display_events && data.display_events.length;
 
     if (data.mode === 'page' || data.mode === 'feedback') {
       const block = data.block || {};
@@ -74,8 +74,8 @@
       optBox.innerHTML = '';
       invBox.innerHTML = '';
       if (continueBtn) continueBtn.hidden = true;
-      // 有展示事件（弹窗）时由弹窗确认回执；无事件才渲染页面确认按钮
-      if (!hasEvents) renderNextButton(data);
+      // 事件确认内联化：确认按钮承载 event_id 回执（§6 协议），不再使用全屏遮罩弹窗
+      renderNextButton(data);
     } else if (data.mode === 'investigation') {
       textBox.textContent = '调查现场 · 你环顾四周，寻找值得留意的物件。';
       textBox.style.display = '';
@@ -87,8 +87,12 @@
       optBox.innerHTML = '';
       invBox.innerHTML = '';
       if (continueBtn) continueBtn.hidden = true;
-      // 分支事件由弹窗承载；无事件（如已取消）才在页面渲染选项/重新选择
-      if (!hasEvents) renderOptions(data.options || [], data);
+      const ev = data.display_events && data.display_events[0];
+      if (ev && ev.event_type === 'branch_selection_requested') {
+        renderBranchInline(ev, data);   // 分支事件内联渲染（choose/cancel 带 event_id）
+      } else {
+        renderOptions(data.options || [], data);  // 无事件（如已取消）：页面选项 + 重新选择
+      }
     } else if (data.mode === 'ending') {
       textBox.textContent = '故事已抵达结局。';
       optBox.innerHTML = '';
@@ -103,14 +107,16 @@
     renderCheckpoints(data);
   }
 
-  /* 文字确认按钮（next_label，不可硬编码动作） */
+  /* 文字确认按钮（内联承载 event_id 回执；文案来自 confirm_label/next_label，不硬编码动作） */
   function renderNextButton(data) {
     const box = $('optBox');
     box.innerHTML = '';
+    const ev = data.display_events && data.display_events[0];
+    const label = (ev && ev.payload && ev.payload.confirm_label) || data.next_label || '我已读完，继续';
     const btn = document.createElement('button');
     btn.className = 'opt next-btn';
-    btn.innerHTML = '<span class="opt-idx">确认 · 继续</span>' + (data.next_label || '我已读完，继续');
-    btn.onclick = () => act('next');
+    btn.innerHTML = '<span class="opt-idx">确认 · 继续</span>' + label;
+    btn.onclick = () => act('next', undefined, ev && ev.event_id);
     box.appendChild(btn);
   }
 
@@ -142,7 +148,33 @@
     }
   }
 
-  /* 分支选项（choices） */
+  /* 分支事件内联渲染（替代全屏弹窗：选项/取消均带 event_id 回执，页面上下文全程可见） */
+  let pendingBranch = null;
+  function renderBranchInline(ev, data) {
+    const box = $('optBox');
+    box.innerHTML = '';
+    const options = (ev.payload && ev.payload.options) || data.options || [];
+    options.forEach((o, i) => {
+      const b = document.createElement('button');
+      b.className = 'opt';
+      b.innerHTML = '<span class="opt-idx">抉择 0' + (i + 1) + '</span>' + o.label;
+      b.onclick = () => act('choose', o.id, ev.event_id);
+      box.appendChild(b);
+    });
+    const c = document.createElement('button');
+    c.className = 'opt next-btn';
+    c.innerHTML = '<span class="opt-idx">稍后选择</span>暂缓选择，稍后再定';
+    c.onclick = () => act('cancel_choice', undefined, ev.event_id);
+    box.appendChild(c);
+    pendingBranch = ev;
+  }
+  // 协议 §6：分支 Escape 等同 cancel_choice（带 event_id）；文字 Escape 不推进
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (pendingBranch && !busy) act('cancel_choice', undefined, pendingBranch.event_id);
+  });
+
+  /* 分支选项（choices，无事件场景：已取消后重开） */
   function renderOptions(options, data) {
     const box = $('optBox');
     box.innerHTML = '';
@@ -205,72 +237,9 @@
     });
   }
 
-  /* ── 事件弹窗（保持协议，夜行风格自实现） ─────────────── */
-  let dialogEl = null;
-  function syncEvents(events) {
-    closeDialog();
-    const event = events && events[0];
-    if (!event) return;
-    const wrap = document.createElement('div');
-    wrap.className = 'mb-backdrop';
-    const card = document.createElement('div');
-    card.className = 'mb-card';
-    const key = (event.box && event.box.group + '/' + event.box.template) || '';
-    const sealText = { 'narration': '叙述', 'dialogue': '对白', 'background': '背景', 'information': '信息', 'screen_text': '屏幕' }[event.box && event.box.template] || '提示';
-    if (event.event_type === 'text_display_requested') {
-      const role = event.payload.role;
-      card.innerHTML =
-        '<div class="mb-head"><span class="mb-seal">' + sealText + '</span><span class="mb-role">' + (role || '旁白') + '</span></div>' +
-        '<p class="mb-text"></p>' +
-        '<button class="btn btn-cta mb-confirm"></button>';
-      card.querySelector('.mb-text').textContent = event.payload.message || '';
-      card.querySelector('.mb-confirm').textContent = event.payload.confirm_label || '我已读完，继续';
-      card.querySelector('.mb-confirm').onclick = () => act('next', undefined, event.event_id);
-    } else if (event.event_type === 'branch_selection_requested') {
-      const options = event.payload.options || [];
-      card.innerHTML =
-        '<div class="mb-head"><span class="mb-seal">抉择</span><span class="mb-role">路线选择</span></div>' +
-        '<p class="mb-text"></p><div class="mb-opts"></div>' +
-        '<button class="btn btn-ghost mb-cancel">稍后选择</button>';
-      card.querySelector('.mb-text').textContent = event.payload.prompt || '请选择接下来的行动';
-      const list = card.querySelector('.mb-opts');
-      options.forEach((o, i) => {
-        const b = document.createElement('button');
-        b.className = 'opt';
-        b.innerHTML = '<span class="opt-idx">路线 0' + (i + 1) + '</span>' + o.label;
-        b.onclick = () => act('choose', o.id, event.event_id);
-        list.appendChild(b);
-      });
-      card.querySelector('.mb-cancel').onclick = () => act('cancel_choice', undefined, event.event_id);
-    } else {
-      return;
-    }
-    wrap.appendChild(card);
-    document.body.appendChild(wrap);
-    dialogEl = wrap;
-    const onKey = (e) => {
-      if (e.key !== 'Escape') return;
-      // 协议：文字弹窗 Escape 不推进；分支弹窗 Escape 等同 cancel_choice（带 event_id 回执）
-      if (event.event_type === 'branch_selection_requested') {
-        act('cancel_choice', undefined, event.event_id);
-      }
-    };
-    wrap._onKey = onKey;
-    document.addEventListener('keydown', onKey);
-    requestAnimationFrame(() => wrap.classList.add('on'));
-  }
-  function closeDialog() {
-    if (dialogEl) {
-      if (dialogEl._onKey) document.removeEventListener('keydown', dialogEl._onKey);
-      dialogEl.remove(); dialogEl = null;
-    }
-  }
-  function showDialogError(text) {
-    if (!dialogEl) return;
-    const card = dialogEl.querySelector('.mb-card');
-    let err = card.querySelector('.mb-error');
-    if (!err) { err = document.createElement('p'); err.className = 'mb-error'; card.insertBefore(err, card.firstChild); }
-    err.textContent = text;
+  /* ── 事件展示：已改为页面内联渲染（renderView），保留空实现兼容调用 ── */
+  function syncEvents() {
+    return Promise.resolve();
   }
 
   /* ── 动作提交（busy 防重 + revision 原样回传 + 失败保留） ── */
@@ -368,7 +337,6 @@
   }
   function showPlayError(message) {
     if (typeof toast === 'function') toast(message);
-    showDialogError(message);
   }
 
   window.AIGame = {
