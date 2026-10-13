@@ -1,0 +1,71 @@
+/* ── 上传剧本 #/upload ──────────────────────────────────── */
+.upload-wrap{margin-top:34px;max-width:780px}
+body.sb-collapsed .upload-wrap{max-width:min(1080px,100%)}
+.upload-wrap .form-panel{background:rgba(242,234,216,.04);border:1px solid var(--line-soft);
+  border-radius:var(--r-card);padding:28px 30px;gap:20px}
+/* 收起态：表单双栏铺满，消除留白 */
+body.sb-collapsed .form-panel{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px;align-items:start}
+body.sb-collapsed .form-panel .upload-warn.show{grid-column:1/-1}
+body.sb-collapsed .form-panel .field:nth-child(6){grid-column:1/-1}
+body.sb-collapsed .form-panel .upload-cta{grid-column:1/-1}
+body.sb-collapsed .form-panel .field:nth-child(3) .chip-row{flex-wrap:wrap}
+.field textarea{width:100%;background:rgba(242,234,216,.06);border:1px solid var(--line);
+  border-radius:8px;color:var(--ink);font:inherit;font-size:13.5px;padding:11px 14px;outline:0;
+  resize:vertical;min-height:84px;line-height:1.7;transition:border-color .3s}
+.field textarea:focus{border-color:var(--gold)}
+.field .hint{font-size:11px;color:var(--ink-faint);margin-top:6px}
+.upload-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:8px;flex-wrap:wrap}
+.upload-cta .hint{font-size:10px;opacity:.7;color:var(--ink-faint);margin-left:auto;text-align:right;letter-spacing:.02em}
+
+/* 生成失败提示状态 */
+.upload-warn{display:none;align-items:flex-start;gap:13px;padding:15px 17px;
+  border:1px solid rgba(176,58,46,.5);border-radius:10px;
+  background:linear-gradient(90deg,rgba(176,58,46,.14),rgba(176,58,46,.05));
+  margin-bottom:20px;position:relative;overflow:hidden}
+.upload-warn::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--red)}
+.upload-warn.show{display:flex;animation:warnIn .5s var(--ease)}
+@keyframes warnIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.upload-warn .warn-seal{flex-shrink:0;width:38px;height:38px;display:grid;place-items:center;
+  font-family:var(--serif);font-weight:900;font-size:11px;letter-spacing:.12em;color:#fff;
+  background:var(--red);border-radius:7px;transform:rotate(-7deg);position:relative;
+  box-shadow:0 0 0 1px rgba(176,58,46,.5) inset,0 0 16px rgba(176,58,46,.4)}
+.upload-warn .warn-seal::after{content:"";position:absolute;inset:3px;border:1px dashed rgba(255,255,255,.6);border-radius:4px}
+.upload-warn .warn-txt{flex:1;min-width:0}
+.upload-warn .warn-txt b{font-family:var(--serif);font-size:14.5px;font-weight:900;
+  color:var(--paper);display:block;margin-bottom:4px;letter-spacing:.03em}
+.upload-warn .warn-txt span{font-size:12px;color:rgba(236,230,216,.72);line-height:1.7;display:block}
+.upload-warn .warn-back{flex-shrink:0;align-self:center;font-size:12px;color:var(--red);
+  border:1px solid rgba(176,58,46,.55);border-radius:7px;padding:8px 14px;
+  font-family:var(--mono);letter-spacing:.1em;transition:all .25s var(--ease);background:rgba(176,58,46,.06)}
+.upload-warn .warn-back:hover{background:var(--red);color:#fff;
+  box-shadow:0 0 18px rgba(176,58,46,.45)}
+
+/* ── 分析中 #/analyzing ─────────────────────────────────── */
+.analyzing-wrap{max-width:640px;margin:60px auto;text-align:center}
+body.sb-collapsed .analyzing-wrap{max-width:720px}
+.analyzing-wrap .az-seal{font-family:var(--serif);font-weight:900;font-size:12px;letter-spacing:.3em;
+  color:var(--gold);border:1.5px solid var(--gold);border-radius:2px;padding:6px 14px;
+  display:inline-block;transform:rotate(-4deg);margin-bottom:22px}
+.analyzing-wrap h1{font-family:var(--serif);font-size:27px;font-weight:900;letter-spacing:.05em;margin-bottom:8px}
+.analyzing-wrap>p{font-size:13.5px;color:var(--ink-dim);margin-bottom:40px}
+.az-progress{height:6px;border-radius:3px;background:rgba(242,234,216,.08);overflow:hidden;margin-bottom:36px}
+.az-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--red));
+  border-radius:3px;transition:width .5s var(--ease)}
+.az-steps{display:flex;flex-direction:column;gap:12px;text-align:left}
+.az-step{display:flex;align-items:center;gap:16px;padding:16px 18px;border:1px solid var(--line-soft);
+  border-radius:10px;background:rgba(242,234,216,.03);transition:all .4s var(--ease)}
+.az-step>div{flex:1;min-width:0}
+.az-step .az-ic{width:40px;height:40px;flex-shrink:0;display:grid;place-items:center;border-radius:10px;
+  border:1.5px solid var(--line);color:var(--ink-faint);transition:all .4s var(--ease)}
+.az-step .az-name{flex:1;font-family:var(--serif);font-size:15px;font-weight:900;letter-spacing:.06em}
+.az-step .az-desc{font-size:11.5px;color:var(--ink-dim);margin-top:3px}
+.az-step .az-state{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-faint)}
+.az-step.run .az-ic{border-color:var(--teal);color:var(--teal);
+  animation:azSpin 1.2s linear infinite}
+.az-step.run .az-state{color:var(--teal)}
+.az-step.done .az-ic{border-color:var(--red);background:var(--red);color:#fff;
+  animation:sealPop .45s var(--ease)}
+.az-step.done .az-state{color:var(--red);font-weight:700}
+.az-step.done .az-name{color:var(--paper)}
+@keyframes azSpin{to{transform:rotate(360deg)}}
+

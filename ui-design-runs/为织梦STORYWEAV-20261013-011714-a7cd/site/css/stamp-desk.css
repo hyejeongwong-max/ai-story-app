@@ -1,0 +1,37 @@
+/* ── 我的剧本 / 印章台 ──────────────────────────────────── */
+.mine-panel[hidden]{display:none}
+.stamp-desk{position:relative;display:flex;align-items:center;gap:22px;
+  border:1.5px dashed var(--gold);border-radius:var(--r-card);
+  padding:22px 26px;margin-bottom:26px;cursor:pointer;color:var(--paper);
+  background:linear-gradient(135deg,rgba(191,160,90,.1),rgba(10,15,24,.3));overflow:hidden;
+  transition:all .35s var(--ease)}
+.stamp-desk::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 90% at 12% 50%,rgba(176,58,46,.16),transparent);
+  opacity:0;transition:opacity .4s}
+.stamp-desk:hover::before{opacity:1}
+.stamp-desk:hover{border-color:var(--gold);background:linear-gradient(135deg,rgba(191,160,90,.18),rgba(10,15,24,.42));transform:translateY(-3px)}
+.stamp-ink{width:62px;height:62px;flex-shrink:0;position:relative;display:grid;place-items:center;
+  border-radius:50%;border:2px solid rgba(242,234,216,.5);transition:transform .4s var(--ease),border-color .4s}
+.stamp-ink::after{content:"";position:absolute;inset:-7px;border-radius:50%;
+  border:1px dashed rgba(191,160,90,.45);animation:inkSpin 12s linear infinite}
+@keyframes inkSpin{to{transform:rotate(360deg)}}
+.stamp-ink .ink-char{font-family:var(--serif);font-weight:900;font-size:24px;color:var(--gold);transition:all .3s}
+.stamp-desk:hover .stamp-ink{transform:rotate(-8deg) scale(1.06);border-color:var(--red)}
+.stamp-desk:hover .ink-char{color:#fff;text-shadow:0 0 14px rgba(176,58,46,.8)}
+.stamp-desk .sd-txt{flex:1;min-width:0}
+.stamp-desk .sd-txt b{font-family:var(--serif);font-size:16.5px;font-weight:900;letter-spacing:.08em;display:block;margin-bottom:3px}
+.stamp-desk .sd-txt span{font-size:12.5px;color:var(--ink-dim)}
+.stamp-desk .sd-go{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:11px;letter-spacing:.2em;color:var(--gold);white-space:nowrap}
+.stamp-desk .sd-go .ic{transition:transform .35s var(--ease)}
+.stamp-desk:hover .sd-go .ic{transform:translateX(6px)}
+
+/* ── 空状态 ─────────────────────────────────────────────── */
+.empty-state{display:none;text-align:center;padding:70px 20px;color:var(--ink-dim)}
+.empty-state.show{display:block}
+.empty-state .glyph{width:72px;height:72px;margin:0 auto 22px;display:grid;place-items:center;
+  border:1.5px dashed var(--gold);border-radius:50%;color:var(--gold);
+  font-family:var(--serif);font-size:26px}
+.empty-state h3{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--paper);margin-bottom:10px}
+.empty-state p{font-size:13.5px;margin-bottom:24px}
+

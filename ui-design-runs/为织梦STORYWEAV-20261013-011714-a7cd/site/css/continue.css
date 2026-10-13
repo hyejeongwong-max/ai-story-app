@@ -1,0 +1,38 @@
+/* ── 继续旅程 ───────────────────────────────────────────── */
+.continue{position:relative;display:flex;align-items:center;gap:22px;
+  background:var(--paper);color:#232018;border-radius:var(--r-card);
+  padding:20px 24px;margin-bottom:28px;cursor:pointer;box-shadow:var(--shadow-paper);
+  transition:transform .32s var(--ease),box-shadow .32s;overflow:visible}
+.continue:hover{transform:translateY(-4px);box-shadow:var(--shadow-float)}
+.continue img{width:86px;height:86px;border-radius:12px;object-fit:cover;flex-shrink:0;
+  object-position:60% 40%;border:2px solid rgba(242,234,216,.6)}
+.continue .txt{flex:1;min-width:0}
+.continue .txt b{display:block;font-family:var(--serif);font-size:17px;font-weight:900;letter-spacing:.04em;margin-bottom:5px}
+.continue .txt span{display:block;font-size:12.5px;color:#6B5F48;line-height:1.7}
+.continue .prog{height:5px;border-radius:3px;background:rgba(107,95,72,.25);overflow:hidden;margin-top:10px;max-width:320px}
+.continue .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--gold));
+  border-radius:3px;transition:width 1.2s var(--ease) .2s}
+.continue.in .prog i{width:33%}
+.stamp-big{position:absolute;top:-16px;right:-6px;z-index:3;width:112px;height:112px;flex-shrink:0;pointer-events:none}
+.stamp-big svg{width:100%;height:100%;display:block;filter:drop-shadow(0 6px 14px rgba(140,46,36,.4))}
+.stamp-big .mask{transform-origin:50% 50%;transform:rotate(-6deg)}
+.stamp-big::after{content:"";position:absolute;inset:-6px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(176,58,46,.4),transparent 68%);
+  opacity:0;transition:opacity .45s var(--ease)}
+.continue:hover .stamp-big::after{opacity:1}
+.go{position:relative;display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--serif);font-size:14px;font-weight:900;letter-spacing:.14em;color:#232018;
+  white-space:nowrap;padding:11px 20px;border:1.5px solid #232018;border-radius:8px;
+  background:rgba(255,255,255,.18);transition:background .3s,color .3s,transform .3s}
+.go::before{content:"";position:absolute;inset:-5px;border-radius:12px;
+  border:1.5px solid rgba(176,58,46,.5);animation:pulseRing 1.8s ease-out infinite}
+@keyframes pulseRing{0%{transform:scale(.9);opacity:.8}70%{transform:scale(1.18);opacity:0}100%{transform:scale(1.18);opacity:0}}
+.go .golabel{position:relative}
+.go .go-sub{display:block;font-family:var(--sans);font-size:9.5px;font-weight:500;
+  letter-spacing:.2em;color:#8A7C60;margin-top:1px;position:relative}
+.go .ic{animation:goArrow 1.4s var(--ease) infinite}
+@keyframes goArrow{0%{transform:translateX(0);opacity:.5}50%{transform:translateX(6px);opacity:1}100%{transform:translateX(0);opacity:.5}}
+.continue:hover .go{background:var(--red);border-color:var(--red);color:#fff;transform:translateX(3px);
+  box-shadow:0 6px 16px -4px rgba(176,58,46,.5)}
+.continue:hover .go .go-sub{color:rgba(255,255,255,.82)}
+

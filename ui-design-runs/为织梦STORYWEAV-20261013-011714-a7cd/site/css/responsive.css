@@ -1,0 +1,25 @@
+/* ── 响应式 / 降级 ──────────────────────────────────────── */
+@media(max-width:1080px){.story-grid{grid-template-columns:repeat(2,1fr)}
+  .play-grid{grid-template-columns:170px 1fr;}.play-notes{position:static;grid-column:1/-1}
+  .detail-hero{grid-template-columns:280px 1fr}}
+@media(max-width:960px){body.sb-collapsed .form-panel{grid-template-columns:1fr}}
+@media(max-width:840px){
+  .shell{flex-direction:column}
+  .sidebar{width:100%;height:auto;position:static;flex-direction:row;align-items:center;
+    padding:10px 16px;border-right:0;border-bottom:1px solid var(--line-soft)}
+  .brand{padding:6px 10px;border-bottom:0}.side-label,.side-foot{display:none}
+  .nav{flex-direction:row;gap:4px;padding:0 8px}.nav-item{padding:8px 12px}
+  .nav-item .ic{display:none}.nav-item.active::before{display:none}
+  .stage{max-width:100%}.hero{margin:0;border-radius:var(--r-shell);height:360px}
+  .stamp-big{display:none}.save-tip{left:16px;right:auto;bottom:16px}
+  .detail-hero,.play-grid,.notes-wrap{grid-template-columns:1fr}
+  .companions,.role-cards{grid-template-columns:1fr}
+  .img-choice{grid-template-columns:1fr}
+  .options{grid-template-columns:1fr}
+}
+@media(max-width:640px){.story-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}.hero-media img{transform:none}
+  .glitch-a,.glitch-b{display:none}
+}

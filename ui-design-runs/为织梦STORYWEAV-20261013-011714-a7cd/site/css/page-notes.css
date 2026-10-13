@@ -1,0 +1,33 @@
+/* ── 任务手记 #/notes ───────────────────────────────────── */
+.notes-wrap{margin-top:34px;display:grid;grid-template-columns:250px 1fr;gap:20px;align-items:start}
+.notes-list{border-radius:var(--r-card);border:1px solid var(--line-soft);padding:16px;display:flex;flex-direction:column;gap:8px}
+.notes-list h5{font-family:var(--mono);font-size:9.5px;letter-spacing:.28em;color:var(--ink-faint);margin-bottom:8px}
+.note-item{display:flex;gap:12px;align-items:center;padding:12px;border-radius:10px;cursor:pointer;
+  border:1px solid transparent;transition:all .3s var(--ease)}
+.note-item img{width:46px;height:46px;border-radius:8px;object-fit:cover}
+.note-item b{font-family:var(--serif);font-size:13.5px;font-weight:900;display:block}
+.note-item span{font-size:10.5px;color:var(--ink-dim)}
+.note-item:hover{border-color:rgba(191,160,90,.4);background:rgba(242,234,216,.05)}
+.note-item.on{border-color:rgba(191,160,90,.55);background:rgba(191,160,90,.1)}
+.notes-detail{border-radius:var(--r-card);border:1px solid var(--line-soft);
+  background:rgba(242,234,216,.04);padding:26px 26px;display:flex;flex-direction:column;gap:20px}
+.notes-detail .nd-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.notes-detail .nd-head h2{font-family:var(--serif);font-size:21px;font-weight:900;letter-spacing:.04em}
+.notes-detail .nd-head .case-id{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--ink-faint)}
+.nd-block h4{font-family:var(--mono);font-size:10px;letter-spacing:.28em;color:var(--gold);margin-bottom:12px}
+
+/* ── 审核拦截 #/blocked ─────────────────────────────────── */
+.blocked-wrap{max-width:620px;margin:70px auto;text-align:center;position:relative}
+body.sb-collapsed .blocked-wrap{max-width:700px}
+.blocked-wrap::before{content:"";position:absolute;inset:-30px;pointer-events:none;z-index:0;
+  background:radial-gradient(60% 60% at 50% 40%,rgba(176,58,46,.14),transparent 70%)}
+.blocked-wrap>*{position:relative;z-index:1}
+.blocked-seal{width:120px;height:120px;margin:0 auto 28px;position:relative;display:grid;place-items:center}
+.blocked-seal svg{width:100%;height:100%;animation:sealWarn 2.4s ease-in-out infinite}
+@keyframes sealWarn{0%,100%{filter:drop-shadow(0 0 8px rgba(176,58,46,.5))}
+  50%{filter:drop-shadow(0 0 26px rgba(176,58,46,.9))}}
+.blocked-wrap h1{font-family:var(--serif);font-size:30px;font-weight:900;letter-spacing:.1em;margin-bottom:14px}
+.blocked-wrap .reason{font-size:14px;color:rgba(236,230,216,.8);line-height:2;margin-bottom:8px}
+.blocked-wrap .code{font-family:var(--mono);font-size:11px;letter-spacing:.3em;color:var(--red);margin-bottom:34px}
+.blocked-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+

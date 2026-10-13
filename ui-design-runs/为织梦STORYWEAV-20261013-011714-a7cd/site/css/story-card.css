@@ -1,0 +1,59 @@
+/* ── 剧本卡片 ───────────────────────────────────────────── */
+.section-row{margin-bottom:34px}
+.story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.story-card{position:relative;border-radius:var(--r-card);overflow:hidden;
+  background:var(--paper);color:#232018;cursor:pointer;box-shadow:var(--shadow-paper);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.story-card::before{content:"";position:absolute;inset:0;border-radius:var(--r-card);
+  border:1.5px solid transparent;z-index:4;pointer-events:none;transition:border-color .35s}
+.story-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-float)}
+.story-card:hover::before{border-color:rgba(191,160,90,.6)}
+.story-card .cover{position:relative;height:244px;overflow:hidden}
+.story-card .cover img{width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.story-card:hover .cover img{transform:scale(1.09)}
+.story-card .cover::before{content:"";position:absolute;inset:0;z-index:2;
+  background:linear-gradient(180deg,transparent 50%,rgba(242,234,216,.92) 100%)}
+.story-card .cover::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-30%;
+  width:34%;z-index:3;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);
+  transform:skewX(-18deg) translateX(-220%);transition:transform .9s var(--ease)}
+.story-card:hover .cover::after{transform:skewX(-18deg) translateX(420%)}
+.story-card .case-tag{position:absolute;top:12px;left:-6px;z-index:3;
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--red);
+  background:transparent;border:1px solid var(--red);
+  padding:5px 14px 5px 12px;box-shadow:none}
+.story-card .case-tag::after{content:"";position:absolute;right:6px;top:50%;
+  width:3px;height:3px;border-radius:50%;background:var(--gold)}
+.story-card .case-water{position:absolute;right:10px;bottom:6px;z-index:2;
+  font-family:var(--serif);font-weight:900;font-size:34px;line-height:1;
+  color:rgba(255,255,255,.92);text-shadow:0 2px 12px rgba(0,0,0,.5);
+  letter-spacing:.02em;transition:transform .4s var(--ease)}
+.story-card:hover .case-water{transform:translateY(-4px) scale(1.05)}
+.story-card .seal{position:absolute;top:16px;right:16px;z-index:3;
+  font-family:var(--serif);font-weight:900;font-size:12px;letter-spacing:.26em;
+  color:#fff;background:var(--red);padding:5px 12px;border-radius:2px;
+  transform:rotate(4deg) scale(1.5);opacity:0;box-shadow:0 5px 14px rgba(0,0,0,.4);
+  transition:opacity .25s var(--ease)}
+.story-card:hover .seal{opacity:1;animation:sealIn .45s var(--ease)}
+@keyframes sealIn{0%{transform:rotate(4deg) scale(1.7);opacity:0}
+  55%{transform:rotate(-4deg) scale(.92);opacity:1}75%{transform:rotate(2deg) scale(1.04);opacity:1}
+  100%{transform:rotate(4deg) scale(1);opacity:1}}
+.story-card .body{padding:15px 17px 17px;position:relative}
+.story-card .body::before{content:"";position:absolute;left:17px;right:17px;top:36px;height:1px;
+  background:linear-gradient(90deg,var(--gold),transparent 70%)}
+.story-card .tags{display:flex;gap:6px;margin-bottom:9px}
+.tag{display:inline-block;font-size:10px;letter-spacing:.12em;color:#6B5F48;
+  border:1px solid rgba(107,95,72,.5);padding:2px 8px;border-radius:999px}
+.story-card .body h3{font-family:var(--serif);font-size:18.5px;font-weight:900;margin-bottom:7px;
+  transition:transform .3s var(--ease)}
+.story-card:hover .body h3{transform:translateX(3px)}
+.story-card .body p{font-size:12.5px;color:#5A4F3C;line-height:1.7;margin-bottom:11px}
+.story-card .meta{display:flex;justify-content:space-between;align-items:center;
+  border-top:1px dashed rgba(107,95,72,.35);padding-top:10px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:#8A7C60}
+.story-card .meta .stat{display:inline-flex;align-items:center;gap:6px}
+.story-card .meta .more{font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;color:#5A4F3C;
+  display:inline-flex;align-items:center;gap:4px;opacity:0;transform:translateX(-6px);
+  transition:all .3s var(--ease)}
+.story-card:hover .meta .more{opacity:1;transform:none;color:var(--red)}
+

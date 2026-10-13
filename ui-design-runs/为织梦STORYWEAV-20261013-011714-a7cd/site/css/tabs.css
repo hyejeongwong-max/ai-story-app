@@ -1,0 +1,24 @@
+/* ── Tab 档案签 ─────────────────────────────────────────── */
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:38px 0 24px;flex-wrap:wrap}
+.tabs{display:flex;gap:12px;flex-wrap:wrap}
+.tab-card{position:relative;display:flex;align-items:baseline;gap:9px;
+  border:1px solid var(--line);border-radius:10px;padding:11px 16px 10px;
+  background:rgba(10,15,24,.4);transition:transform .28s var(--ease),border-color .28s,background .28s}
+.tab-card .num{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-faint);transition:color .28s}
+.tab-card .name{font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:.18em;color:var(--ink-dim);transition:color .28s}
+.tab-card:hover{transform:translateY(-3px) rotate(-1deg);border-color:rgba(191,160,90,.5)}
+.tab-card:hover .name{color:var(--paper)}
+.tab-card[aria-pressed="true"]{background:rgba(242,234,216,.3);border-color:rgba(242,234,216,.55);
+  transform:translateY(-4px);
+  box-shadow:0 8px 22px -8px rgba(0,0,0,.5),0 0 18px rgba(242,234,216,.12)}
+.tab-card[aria-pressed="true"] .name{color:var(--paper);text-shadow:none}
+.tab-card[aria-pressed="true"] .num{color:var(--gold);font-weight:700}
+.tab-card .stamp{position:absolute;top:-8px;right:-8px;width:18px;height:16px;
+  background:url(../assets/pin.png) no-repeat center/contain;
+  transform:scale(0) rotate(-12deg);transition:transform .35s var(--ease) .06s}
+.tab-card[aria-pressed="true"] .stamp{transform:scale(1) rotate(-12deg)}
+.tab-card .underline{position:absolute;left:12px;right:12px;bottom:4px;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--red));transform:scaleX(0);transform-origin:left;
+  transition:transform .4s var(--ease) .08s}
+.tab-card[aria-pressed="true"] .underline{transform:scaleX(1)}
+

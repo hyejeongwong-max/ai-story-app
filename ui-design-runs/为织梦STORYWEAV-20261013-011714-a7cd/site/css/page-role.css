@@ -1,0 +1,91 @@
+/* ── 创建角色 #/role ────────────────────────────────────── */
+.steps{display:flex;align-items:center;gap:0;margin:34px 0 30px}
+.step{display:flex;align-items:center;gap:12px;position:relative;flex:1}
+.step:not(:last-child)::after{content:"";flex:1;height:2px;margin:0 18px;
+  background:rgba(242,234,216,.12);position:relative;top:0}
+.step.done:not(:last-child)::after{background:linear-gradient(90deg,var(--gold),rgba(191,160,90,.2))}
+.step .st-no{width:34px;height:34px;flex-shrink:0;display:grid;place-items:center;border-radius:50%;
+  font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink-dim);
+  border:1.5px solid var(--line);transition:all .35s var(--ease)}
+.step .st-name{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--ink-dim);
+  transition:color .35s}
+.step.done .st-no{background:var(--red);border-color:var(--red);color:transparent;
+  position:relative;animation:sealPop .4s var(--ease)}
+.step.done .st-no::after{content:"✓";position:absolute;inset:0;display:grid;place-items:center;
+  color:#fff;font-family:var(--mono);font-size:14px;font-weight:700}
+@keyframes sealPop{0%{transform:scale(.4)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.step.done .st-name{color:var(--paper)}
+.step.cur .st-no{background:var(--gold);border-color:var(--gold);color:#14181F;
+  box-shadow:0 0 0 6px rgba(191,160,90,.15)}
+.step.cur .st-name{color:var(--gold)}
+.role-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:26px}
+.role-card{position:relative;border-radius:var(--r-card);overflow:hidden;cursor:pointer;
+  background:var(--paper);color:#232018;box-shadow:var(--shadow-paper);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.role-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-float)}
+.role-card .rc-img{position:relative;height:270px;overflow:hidden}
+.role-card .rc-img img{width:100%;height:100%;object-fit:cover;object-position:50% 15%;
+  transition:transform .7s var(--ease)}
+.role-card:hover .rc-img img{transform:scale(1.07)}
+.role-card .rc-img::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 45%,rgba(242,234,216,.95) 100%)}
+.role-card .rc-tag{position:absolute;top:12px;left:-6px;z-index:2;font-family:var(--mono);
+  font-size:10px;letter-spacing:.2em;color:#fff;background:linear-gradient(90deg,var(--red),var(--red-deep));
+  padding:5px 14px 5px 12px;clip-path:polygon(0 0,100% 0,92% 50%,100% 100%,0 100%)}
+.role-card .rc-seal{position:absolute;top:16px;right:16px;z-index:2;font-family:var(--serif);
+  font-weight:900;font-size:12px;letter-spacing:.2em;color:#fff;background:var(--red);
+  padding:5px 12px;border-radius:2px;transform:rotate(4deg) scale(0);box-shadow:0 5px 14px rgba(0,0,0,.4);
+  transition:transform .4s var(--ease)}
+.role-card.picked .rc-seal{transform:rotate(4deg) scale(1);animation:sealIn .45s var(--ease)}
+.role-card .rc-body{padding:16px 18px 18px}
+.role-card .rc-body h3{font-family:var(--serif);font-size:19px;font-weight:900;margin-bottom:5px}
+.role-card .rc-body p{font-size:12.5px;color:#5A4F3C;line-height:1.7;margin-bottom:10px}
+.role-card .rc-body .tags{display:flex;gap:6px}
+.role-card.picked{border:1.5px solid var(--gold);transform:translateY(-5px)}
+.role-card.picked::after{content:"";position:absolute;inset:0;border-radius:var(--r-card);
+  box-shadow:0 0 0 3px rgba(191,160,90,.25) inset;pointer-events:none;z-index:3}
+.form-panel{display:flex;flex-direction:column;gap:18px}
+.field label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;
+  color:var(--gold);margin-bottom:8px}
+.field input[type=text]{width:100%;background:rgba(242,234,216,.06);border:1px solid var(--line);
+  border-radius:8px;color:var(--ink);font:inherit;font-size:14px;padding:11px 14px;outline:0;
+  transition:border-color .3s}
+.field input[type=text]:focus{border-color:var(--gold)}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap}
+.mini-chip{border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-size:12.5px;
+  color:var(--ink-dim);transition:all .25s var(--ease)}
+.mini-chip:hover{border-color:var(--gold);color:var(--paper);transform:translateY(-2px)}
+.mini-chip.on{background:var(--paper);color:#14181F;border-color:var(--paper);font-weight:700}
+.img-choice{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.img-choice .ic-item{border:1px solid var(--line);border-radius:10px;padding:16px 12px;text-align:center;
+  cursor:pointer;transition:all .3s var(--ease);position:relative;font-family:var(--serif);
+  font-size:13.5px;font-weight:700;color:var(--ink-dim)}
+.img-choice .ic-item small{display:block;font-family:var(--sans);font-size:11px;font-weight:400;
+  color:var(--ink-faint);margin-top:4px;line-height:1.6}
+.img-choice .ic-item:hover{transform:translateY(-3px);border-color:var(--gold);color:var(--paper)}
+.img-choice .ic-item.on{border-color:var(--red);background:rgba(176,58,46,.08);color:var(--paper)}
+.img-choice .ic-item.on::after{content:"✓";position:absolute;top:-9px;right:-9px;width:22px;height:22px;
+  border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;
+  font-family:var(--mono);font-size:12px;font-weight:700;animation:sealPop .4s var(--ease)}
+
+/* ── 头像来源后续流程：上传 / AI 生成 ─────────────────── */
+.img-flow{opacity:0;transform:translateY(-6px);transition:opacity .35s var(--ease),transform .35s var(--ease);
+  margin-top:16px}
+.img-flow.show{opacity:1;transform:none}
+.up-box{border:1.5px dashed rgba(191,160,90,.5);border-radius:10px;padding:22px 16px;text-align:center;
+  cursor:pointer;transition:all .3s var(--ease);background:rgba(242,234,216,.03)}
+.up-box:hover{border-color:var(--gold);background:rgba(191,160,90,.07)}
+.up-box .up-ph{display:block;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--paper)}
+.up-box img{max-height:150px;max-width:100%;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.45);
+  margin:4px auto 6px}
+.up-box small{display:block;margin-top:8px;color:var(--ink-faint);font-family:var(--sans);font-size:11px}
+.flow-row{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap}
+.flow-row .btn{flex:none}
+.flow-row .hint{font-size:12px;color:var(--ink-faint)}
+.up-confirm:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.6)}
+.gen-input{width:100%;min-height:96px;border:1px solid var(--line);border-radius:10px;background:rgba(242,234,216,.04);
+  color:var(--paper);font-family:var(--sans);font-size:13px;line-height:1.8;padding:12px 14px;resize:vertical;
+  transition:border-color .3s var(--ease)}
+.gen-input::placeholder{color:var(--ink-faint)}
+.gen-input:focus{outline:none;border-color:var(--gold)}
+

@@ -1,0 +1,75 @@
+
+/* ════════════════════════════════════════════════════════════
+   沉浸剧本杀 · AI 互动叙事游戏（完整多页高保真原型 v3）
+   夜行档案・都市怪谈 / 游戏感视觉 + 印章语言 + 雾幕动效
+   路由：#/hall #/detail #/role #/play #/ending #/upload
+          #/analyzing #/notes #/blocked
+   ════════════════════════════════════════════════════════════ */
+:root{
+  --canvas:#0E1420;--canvas-2:#121B2C;--canvas-3:#0A0F18;
+  --paper:#F2EAD8;--paper-2:#E6DCC2;--paper-dim:#C9BC9C;
+  --ink:#ECE6D8;--ink-dim:#9D937E;--ink-faint:#6E6A62;
+  --red:#B03A2E;--red-deep:#8C2E24;--teal:#58C1B2;--gold:#BFA05A;
+  --line:rgba(242,234,216,.13);--line-soft:rgba(242,234,216,.07);
+  --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gut:clamp(20px,3.2vw,56px);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --r-shell:28px;--r-card:12px;--r-control:8px;
+  --shadow-card:0 1px 0 rgba(255,255,255,.04) inset,0 10px 30px -12px rgba(0,0,0,.55),0 24px 60px -24px rgba(0,0,0,.6);
+  --shadow-paper:0 1px 0 rgba(255,255,255,.18) inset,0 6px 18px -6px rgba(0,0,0,.45);
+  --shadow-float:0 1px 0 rgba(255,255,255,.05) inset,0 18px 50px -14px rgba(0,0,0,.65),0 40px 90px -40px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--canvas);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button,a[href]{min-height:24px}
+::selection{background:var(--red);color:#fff}
+
+/* ── 壳 ─────────────────────────────────────────────────── */
+.shell{display:flex;min-height:100vh;background:
+  radial-gradient(1200px 600px at 78% -8%,rgba(88,193,178,.05),transparent 60%),
+  radial-gradient(900px 500px at 8% 108%,rgba(191,160,90,.05),transparent 55%),
+  var(--canvas)}
+.main{flex:1;min-width:0;position:relative}
+.main::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:url("../assets/texture.jpg") center/cover no-repeat;opacity:.05;mix-blend-mode:soft-light}
+.stage{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 var(--gut) 90px}
+/* 侧栏收起：内容区接住全宽，消除留白 */
+body.sb-collapsed .stage{max-width:min(1400px,calc(100% - 40px))}
+@media(max-width:1080px){body.sb-collapsed .stage{max-width:100%}}
+.page{display:none}
+.page.active{display:block;animation:pageIn .55s var(--ease) both}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* 雾幕：页面/场景切换过渡 */
+.fog{position:fixed;inset:0;z-index:80;pointer-events:none;opacity:0;
+  background:radial-gradient(120% 100% at 50% 40%,rgba(10,15,24,.72),rgba(10,15,24,.96))}
+.fog.on{animation:fogFade 1.1s var(--ease) both}
+@keyframes fogFade{0%{opacity:0}25%{opacity:1}75%{opacity:1}100%{opacity:0}}
+
+
+/* ── 放大镜指针 + 脚印轨迹 ────────────────────────────────── */
+.mag-on, .mag-on *{cursor:none!important}
+.magnifier{position:fixed;left:0;top:0;z-index:120;width:50px;height:55px;pointer-events:none;
+  transform:translate(-50%,-44%);will-change:transform;
+  transition:width .28s var(--ease),height .28s var(--ease)}
+.magnifier img{width:100%;height:100%;object-fit:contain;display:block;
+  filter:drop-shadow(0 5px 9px rgba(0,0,0,.55))}
+.magnifier.hot{width:60px;height:66px}
+.magnifier.hot img{filter:drop-shadow(0 6px 12px rgba(0,0,0,.6)) drop-shadow(0 0 9px rgba(191,160,90,.5))}
+.trail-layer{position:fixed;inset:0;z-index:119;pointer-events:none;overflow:hidden}
+.trail-step{position:absolute;width:29px;height:39px;transform-origin:center bottom;
+  color:rgba(0,0,0,.9);will-change:transform,opacity;
+  animation:stepFade 1.35s var(--ease) forwards}
+.trail-step svg{width:100%;height:100%;display:block;overflow:visible}
+@keyframes stepFade{0%{opacity:0;transform:scale(.45) rotate(var(--rot,0deg)) translateY(4px)}
+  14%{opacity:.55;transform:scale(1) rotate(var(--rot,0deg)) translateY(0)}
+  46%{opacity:.5;transform:scale(1.02) rotate(var(--rot,0deg))}
+  100%{opacity:0;transform:scale(1.08) rotate(var(--rot,0deg)) translateY(-6px)}}
+@media(max-width:840px){.magnifier,.trail-layer{display:none}}

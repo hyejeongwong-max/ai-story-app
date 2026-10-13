@@ -1,0 +1,20 @@
+/* ── Toast / 存档 ───────────────────────────────────────── */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(90px);
+  display:flex;align-items:center;gap:12px;background:var(--paper);color:#232018;
+  border-radius:10px;padding:13px 22px;font-size:13.5px;z-index:99;opacity:0;
+  box-shadow:var(--shadow-float);transition:all .32s var(--ease)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .ic{color:var(--red)}
+.save-tip{position:fixed;bottom:22px;right:calc(var(--gut) + 20px);z-index:45;
+  display:inline-flex;align-items:center;gap:9px;font-size:12px;color:var(--ink-dim);
+  background:rgba(10,15,24,.62);border:1px solid var(--line-soft);border-radius:999px;
+  padding:8px 16px;backdrop-filter:blur(8px);
+  opacity:0;transform:translateY(14px);pointer-events:none;
+  transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.save-tip.show{opacity:1;transform:none;pointer-events:auto}
+.save-tip .pulse{width:7px;height:7px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 0 0 rgba(88,193,178,.7);animation:pingTeal 2.6s infinite}
+@keyframes pingTeal{70%{box-shadow:0 0 0 9px rgba(88,193,178,0)}100%{box-shadow:0 0 0 0 rgba(88,193,178,0)}}
+
+/* ═══════ 页面专用样式 ═══════ */
+
