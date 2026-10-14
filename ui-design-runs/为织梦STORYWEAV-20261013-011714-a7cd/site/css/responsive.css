@@ -4,6 +4,7 @@
   .detail-hero{grid-template-columns:280px 1fr}}
 @media(max-width:960px){body.sb-collapsed .form-panel{grid-template-columns:1fr}}
 @media(max-width:840px){
+  .sb-wrap{width:100%}
   .shell{flex-direction:column}
   .sidebar{width:100%;height:auto;position:static;flex-direction:row;align-items:center;
     padding:10px 16px;border-right:0;border-bottom:1px solid var(--line-soft)}

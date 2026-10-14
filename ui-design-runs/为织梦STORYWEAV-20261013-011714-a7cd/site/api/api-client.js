@@ -66,8 +66,11 @@
     return result.data;
   }
 
-  async function startGame(onProgress) {
-    const data = await request(API.game, {}, onProgress);
+  async function startGame(scriptName, roleId, onProgress) {
+    const payload = {};
+    if (scriptName) payload.script_name = scriptName;
+    if (roleId) payload.role_id = roleId;
+    const data = await request(API.game, payload, onProgress);
     try { localStorage.setItem(storageKey, data.game_id); } catch (e) { /* 平台存储不可用则忽略 */ }
     return data;
   }

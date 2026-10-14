@@ -1,4 +1,7 @@
 /* ── 侧栏 ───────────────────────────────────────────────── */
+/* 外层 sb-wrap 负责宽度动画（裁切），内部 .sidebar 宽度恒定 236px，
+   收起/展开时内部元素不再被挤压 reflow，消除震荡错位 */
+.sb-wrap{width:236px;flex-shrink:0;overflow:hidden;transition:width .45s var(--ease)}
 .sidebar{width:236px;flex-shrink:0;position:sticky;top:0;height:100vh;
   display:flex;flex-direction:column;border-right:1px solid var(--line-soft);
   background:linear-gradient(180deg,rgba(10,15,24,.72),rgba(10,15,24,.55));
@@ -91,13 +94,15 @@ body.sb-open .sb-toggle{display:none}
 @keyframes sbSwing{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(-7.5deg) translateY(-1px)}}
 body.sb-collapsed:not(.sb-open) .sb-toggle:hover .sb-tape{animation:sbSwing 2.4s ease-in-out infinite}
 
-.sidebar{transition:width .45s var(--ease),transform .45s var(--ease),opacity .3s var(--ease)}
-body.sb-collapsed .sidebar{width:0;transform:translateX(-100%);opacity:0;pointer-events:none;overflow:hidden}
-body.sb-collapsed .sidebar .brand,body.sb-collapsed .sidebar .side-label,
-body.sb-collapsed .sidebar .nav,body.sb-collapsed .sidebar .side-foot{white-space:nowrap;overflow:hidden}
-body.sb-open .sidebar{width:236px;transform:none;opacity:1;pointer-events:auto}
+.sidebar{transition:opacity .3s var(--ease)}
+body.sb-collapsed .sb-wrap{width:0}
+body.sb-collapsed .sidebar{opacity:0;pointer-events:none}
+body.sb-open .sb-wrap{width:236px}
+body.sb-open .sidebar{opacity:1;pointer-events:auto}
 @media(max-width:840px){
-  body.sb-collapsed .sidebar{width:100%;transform:none;opacity:1;pointer-events:auto;overflow:visible}
+  .sb-wrap{width:100%}
+  body.sb-collapsed .sb-wrap{width:100%}
+  body.sb-collapsed .sidebar{opacity:1;pointer-events:auto}
   body.sb-collapsed:not(.sb-open) .sb-toggle{display:none}
   .sb-collapse-btn{display:none}
 }

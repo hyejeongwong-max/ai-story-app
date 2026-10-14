@@ -38,6 +38,13 @@
     current = data;
     pendingBranch = null;
 
+    // 角色身份：开局后更新 play 页角色卡（selected_role_name 优先）
+    const roleName = data.selected_role_name || data.role_name || '';
+    const rn = $('myRoleName');
+    const rs = $('myRoleState');
+    if (rn && roleName) rn.textContent = roleName;
+    if (rs && roleName) rs.textContent = data.role_state || '本局身份 · 已选定';
+
     // 章节与场景
     $('playChapter').textContent = data.scene_title || '档案 · 未命名场景';
     $('sceneTag').textContent = '◆ ' + (data.scene_title || '');
@@ -270,10 +277,23 @@
   }
 
   /* ── 入口：开始 / 恢复 ─────────────────────── */
-  async function startGame(routeTo = true) {
+  // 新协议：开局必须指定剧本与角色（POST /api/game {script_name, role_id}）
+  // 大厅点击剧本卡片 → 记录 pendingScript/pendingRole → #/role 确认后开局
+  let pendingScript = null;
+  let pendingRole = null;
+  function setPending(scriptName, roleId) {
+    pendingScript = scriptName || pendingScript;
+    pendingRole = roleId || pendingRole;
+  }
+  function pending() { return { script: pendingScript, role: pendingRole }; }
+
+  async function startGame(routeTo = true, scriptName, roleId) {
+    if (!scriptName && pendingScript) scriptName = pendingScript;
+    if (!roleId && pendingRole) roleId = pendingRole;
+    if (!scriptName && current && current.script_name) scriptName = current.script_name; // 结局重开同一剧本
     setBusy(true);
     try {
-      const data = await AIGameAPI.startGame();
+      const data = await AIGameAPI.startGame(scriptName, roleId);
       renderView(data);
       await syncEvents(data.display_events);
       if (routeTo) go('play');
@@ -283,6 +303,13 @@
     } finally {
       setBusy(false);
     }
+  }
+
+  /* #/role 页确认按钮：以当前选中角色开局 */
+  async function startWithRole() {
+    const roleId = (typeof window.getPickedRole === 'function') ? window.getPickedRole() : null;
+    setPending(null, roleId);
+    await startGame(true, null, roleId);
   }
 
   async function resumeGame() {
@@ -357,6 +384,9 @@
   }, true);
 
   window.AIGame = {    startGame: startGame,
+    startWithRole: startWithRole,
+    setPending: setPending,
+    pending: pending,
     resumeGame: resumeGame,
     act: act,
     syncEvents: syncEvents,

@@ -2,27 +2,28 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-store">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>沉浸剧本杀 · AI 互动叙事游戏</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='6' y='6' width='88' height='88' rx='10' fill='%23B03A2E'/%3E%3Crect x='15' y='15' width='70' height='70' rx='5' fill='none' stroke='%23F2EAD8' stroke-width='3.5'/%3E%3Ctext x='50' y='66' font-size='40' font-family='serif' font-weight='900' fill='%23F2EAD8' text-anchor='middle'%3E沉%3C/text%3E%3C/svg%3E">
+<title>深探 · AI 互动叙事游戏</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='6' y='6' width='88' height='88' rx='10' fill='%23B03A2E'/%3E%3Crect x='15' y='15' width='70' height='70' rx='5' fill='none' stroke='%23F2EAD8' stroke-width='3.5'/%3E%3Ctext x='50' y='66' font-size='40' font-family='serif' font-weight='900' fill='%23F2EAD8' text-anchor='middle'%3E深%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://miaoda.feishu.cn">
 <link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=35">
-<link rel="stylesheet" href="css/sidebar.css?v=35">
-<link rel="stylesheet" href="css/ui.css?v=35">
-<link rel="stylesheet" href="css/hero.css?v=35">
-<link rel="stylesheet" href="css/tabs.css?v=35">
-<link rel="stylesheet" href="css/continue.css?v=35">
-<link rel="stylesheet" href="css/story-card.css?v=35">
-<link rel="stylesheet" href="css/stamp-desk.css?v=35">
-<link rel="stylesheet" href="css/toast.css?v=35">
-<link rel="stylesheet" href="css/page-detail.css?v=35">
-<link rel="stylesheet" href="css/page-role.css?v=35">
-<link rel="stylesheet" href="css/page-play.css?v=35">
-<link rel="stylesheet" href="css/page-ending.css?v=35">
-<link rel="stylesheet" href="css/page-upload.css?v=35">
-<link rel="stylesheet" href="css/page-notes.css?v=35">
-<link rel="stylesheet" href="css/responsive.css?v=35">
+<link rel="stylesheet" href="css/base.css?v=40">
+<link rel="stylesheet" href="css/sidebar.css?v=40">
+<link rel="stylesheet" href="css/ui.css?v=40">
+<link rel="stylesheet" href="css/hero.css?v=40">
+<link rel="stylesheet" href="css/tabs.css?v=40">
+<link rel="stylesheet" href="css/continue.css?v=40">
+<link rel="stylesheet" href="css/story-card.css?v=40">
+<link rel="stylesheet" href="css/stamp-desk.css?v=40">
+<link rel="stylesheet" href="css/toast.css?v=40">
+<link rel="stylesheet" href="css/page-detail.css?v=40">
+<link rel="stylesheet" href="css/page-role.css?v=40">
+<link rel="stylesheet" href="css/page-play.css?v=40">
+<link rel="stylesheet" href="css/page-ending.css?v=40">
+<link rel="stylesheet" href="css/page-upload.css?v=40">
+<link rel="stylesheet" href="css/page-notes.css?v=40">
+<link rel="stylesheet" href="css/responsive.css?v=40">
 
 </head>
 <body>
@@ -35,14 +36,15 @@
     <span class="sb-tape">目录</span>
   </button>
 
-  <!-- ═══ 侧栏 ═══ -->
+  <!-- ═══ 侧栏（外层 sb-wrap 做宽度动画，内部元素不参与缩放，避免震荡错位） ═══ -->
+  <div class="sb-wrap">
   <aside class="sidebar">
     <button class="sb-collapse-btn" onclick="closeSb()" aria-label="收起侧栏" title="收起侧栏">
       <svg width="13" height="13" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></svg>
     </button>
     <div class="brand">
       <div class="brand-mark"></div>
-      <div class="brand-name">沉浸剧本杀<small>IMMERSIVE MYSTERY</small></div>
+      <div class="brand-name">深探<small>DeepSeek</small></div>
     </div>
     <div class="side-label">你的故事世界</div>
     <nav class="nav" id="nav">
@@ -66,6 +68,7 @@
       </div>
     </div>
   </aside>
+  </div>
 
   <!-- ═══ 主内容 ═══ -->
   <main class="main">
@@ -78,7 +81,7 @@
           <div class="glitch glitch-a"></div>
           <div class="glitch glitch-b"></div>
           <div class="scanlines"></div>
-          <div class="hero-seal">沉浸剧本杀</div>
+          <div class="hero-seal">深探</div>
           <div class="hero-inner">
             <div class="eyebrow"><span class="dot"></span>夜行档案・都市怪谈 · №.001</div>
             <h1>走进故事，成为命运的执笔人</h1>
@@ -342,7 +345,7 @@
         </div>
 
         <div class="detail-cta rv" style="margin-top:28px">
-          <button class="btn btn-cta" onclick="AIGame.startGame()">
+          <button class="btn btn-cta" onclick="AIGame.startWithRole()">
             <span class="txt">确认，开启故事</span>
             <svg class="ic ic-arrow-right" width="18" height="18" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"/></svg>
           </button>
@@ -470,38 +473,146 @@
               </div>
               <button class="warn-back" onclick="hideWarn()">返回编辑</button>
             </div>
-            <div class="field">
+
+            <div class="field wide">
               <label>◆ 剧本标题</label>
               <input type="text" id="upTitle" placeholder="给你的故事一个名字，它将出现在封面上">
               <div class="hint">建议 4–12 字，如「雾都旧案」「林间旅馆」</div>
             </div>
+
+            <div class="param-sec"><span class="ps-num">壹</span>基础设置<em>BASIC</em></div>
             <div class="field">
-              <label>◆ 故事题材（可多选）</label>
-              <div class="chip-row" id="genreRow">
-                <button class="mini-chip on" onclick="pickChip(this)">悬疑</button>
-                <button class="mini-chip on" onclick="pickChip(this)">奇幻</button>
-                <button class="mini-chip" onclick="pickChip(this)">治愈</button>
-                <button class="mini-chip" onclick="pickChip(this)">冒险</button>
-                <button class="mini-chip" onclick="pickChip(this)">科幻</button>
-                <button class="mini-chip" onclick="pickChip(this)">都市怪谈</button>
-                <button class="mini-chip" onclick="pickChip(this)">历史</button>
-                <button class="mini-chip" onclick="pickChip(this)">情感</button>
+              <label>◆ 玩家人数</label>
+              <div class="chip-row one" id="upPlayersRow">
+                <button class="mini-chip on" data-v="2" onclick="pickOne(this)">2 人</button>
+                <button class="mini-chip" data-v="3" onclick="pickOne(this)">3 人</button>
+                <button class="mini-chip" data-v="4" onclick="pickOne(this)">4 人</button>
               </div>
             </div>
             <div class="field">
+              <label>◆ 单局体量</label>
+              <div class="chip-row one" id="upLengthRow">
+                <button class="mini-chip on" data-v="0.5h" onclick="pickOne(this)">0.5h 短局</button>
+                <button class="mini-chip" data-v="1h" onclick="pickOne(this)">1h 标准</button>
+                <button class="mini-chip" data-v="2h+" onclick="pickOne(this)">2h+ 长局</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>◆ 内容尺度</label>
+              <div class="chip-row one" id="upRatingRow">
+                <button class="mini-chip on" onclick="pickOne(this)">全年龄</button>
+                <button class="mini-chip" onclick="pickOne(this)">15+</button>
+                <button class="mini-chip" onclick="pickOne(this)">18+</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>◆ 推理难度</label>
+              <div class="chip-row one" id="upComplexityRow">
+                <button class="mini-chip on" onclick="pickOne(this)">新手</button>
+                <button class="mini-chip" onclick="pickOne(this)">进阶</button>
+                <button class="mini-chip" onclick="pickOne(this)">硬核</button>
+              </div>
+            </div>
+
+            <div class="param-sec"><span class="ps-num">贰</span>题材与风格<em>GENRE &amp; STYLE</em></div>
+            <div class="field wide">
+              <label>◆ 题材风格</label>
+              <div class="chip-row one wrap" id="upStyleRow">
+                <button class="mini-chip on" onclick="pickOne(this)">本格推理</button>
+                <button class="mini-chip" onclick="pickOne(this)">情感沉浸</button>
+                <button class="mini-chip" onclick="pickOne(this)">阵营博弈</button>
+                <button class="mini-chip" onclick="pickOne(this)">恐怖惊悚</button>
+                <button class="mini-chip" onclick="pickOne(this)">欢乐互动</button>
+                <button class="mini-chip" onclick="pickOne(this)">变格超现实</button>
+                <button class="mini-chip" onclick="pickOne(this)">家国大义</button>
+                <button class="mini-chip" onclick="pickOne(this)">治愈温情</button>
+              </div>
+            </div>
+            <div class="field wide">
+              <label>◆ 世界观</label>
+              <div class="chip-row one wrap" id="upWorldRow">
+                <button class="mini-chip" onclick="pickOne(this)">古风</button>
+                <button class="mini-chip" onclick="pickOne(this)">民国</button>
+                <button class="mini-chip" onclick="pickOne(this)">现代</button>
+                <button class="mini-chip" onclick="pickOne(this)">科幻</button>
+                <button class="mini-chip" onclick="pickOne(this)">西幻</button>
+                <button class="mini-chip" onclick="pickOne(this)">架空</button>
+                <button class="mini-chip" onclick="pickOne(this)">武侠</button>
+                <button class="mini-chip" onclick="pickOne(this)">末日废土</button>
+                <button class="mini-chip" onclick="pickOne(this)">神话玄幻</button>
+                <button class="mini-chip on" onclick="pickOne(this)">都市怪谈</button>
+              </div>
+            </div>
+            <div class="field wide">
+              <label>◆ 情绪基调</label>
+              <div class="chip-row one wrap" id="upToneRow">
+                <button class="mini-chip" onclick="pickOne(this)">紧张压抑</button>
+                <button class="mini-chip" onclick="pickOne(this)">轻松幽默</button>
+                <button class="mini-chip" onclick="pickOne(this)">悲情文艺</button>
+                <button class="mini-chip" onclick="pickOne(this)">热血燃向</button>
+                <button class="mini-chip on" onclick="pickOne(this)">悬疑冷峻</button>
+                <button class="mini-chip" onclick="pickOne(this)">荒诞讽刺</button>
+                <button class="mini-chip" onclick="pickOne(this)">温情治愈</button>
+                <button class="mini-chip" onclick="pickOne(this)">哥特暗黑</button>
+              </div>
+            </div>
+
+            <div class="param-sec"><span class="ps-num">叁</span>叙事设计<em>NARRATIVE</em></div>
+            <div class="field wide">
+              <label>◆ 推理 ↔ 情感 权重 <b class="w-val" id="upWeightVal">均衡 · 5</b></label>
+              <input type="range" id="upWeight" class="w-slider" min="1" max="10" value="5" oninput="onWeight(this)">
+              <div class="w-scale"><span>1 纯推理</span><span>5 均衡</span><span>10 纯情感</span></div>
+            </div>
+            <div class="field">
+              <label>◆ 叙事结构</label>
+              <div class="chip-row one wrap" id="upStructureRow">
+                <button class="mini-chip on" onclick="pickOne(this)">正叙单线</button>
+                <button class="mini-chip" onclick="pickOne(this)">多视角拼图</button>
+                <button class="mini-chip" onclick="pickOne(this)">倒叙揭谜</button>
+                <button class="mini-chip" onclick="pickOne(this)">戏中戏</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>◆ 舞台封闭度</label>
+              <div class="chip-row one" id="upSpaceRow">
+                <button class="mini-chip on" onclick="pickOne(this)">封闭空间</button>
+                <button class="mini-chip" onclick="pickOne(this)">半开放</button>
+                <button class="mini-chip" onclick="pickOne(this)">开放都市</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>◆ 结局形态</label>
+              <div class="chip-row one" id="upEndingRow">
+                <button class="mini-chip on" onclick="pickOne(this)">单一真相</button>
+                <button class="mini-chip" onclick="pickOne(this)">分支结局</button>
+                <button class="mini-chip" onclick="pickOne(this)">开放式余韵</button>
+              </div>
+            </div>
+
+            <div class="param-sec"><span class="ps-num">肆</span>故事素材<em>MATERIAL</em></div>
+            <div class="field wide">
               <label>◆ 故事简介</label>
               <textarea id="upIntro" placeholder="用一两句话告诉玩家，这是一个怎样的故事"></textarea>
               <div class="hint">将显示在剧本封面上，建议 20–50 字</div>
             </div>
-            <div class="field">
+            <div class="field wide">
               <label>◆ 故事背景</label>
               <textarea id="upBg" placeholder="世界观、时代、地点、人物关系……AI 将基于此构建角色与场景" style="min-height:120px"></textarea>
             </div>
-            <div class="field">
+            <div class="field wide">
               <label>◆ 初始场景</label>
               <textarea id="upScene" placeholder="故事从哪里开始？玩家醒来的第一幕"></textarea>
               <div class="hint">AI 将据此生成开场场景插画与第一段叙事</div>
             </div>
+            <div class="field wide">
+              <label>◆ 故事种子 <em class="opt">可选</em></label>
+              <input type="text" id="upSeed" placeholder="一句灵感，如：一封迟到二十年的信">
+            </div>
+            <div class="field wide">
+              <label>◆ 排除项 <em class="opt">可选</em></label>
+              <input type="text" id="upBanned" placeholder="明确不希望出现的元素，如：恐怖元素、恋爱脑剧情">
+            </div>
+
             <div class="upload-cta">
               <button class="btn btn-cta" onclick="submitUpload()">
                 <span class="txt">保存草稿并开始分析</span>
@@ -512,8 +623,6 @@
           </div>
         </div>
       </section>
-
-      <!-- ═══════ 上传分析中 #/analyzing ═══════ -->
       <section class="page" data-page="analyzing">
         <div class="analyzing-wrap">
           <span class="az-seal">AI 解析中</span>
@@ -653,8 +762,8 @@
 <div class="trail-layer" id="trailLayer" aria-hidden="true"></div>
 
 <!-- ═══ 前后端对接层（API 出口 + 后端驱动） ═══ -->
-<script src="api/api-client.js?v=35"></script>
-<script src="api/game-adapter.js?v=35"></script>
+<script src="api/api-client.js?v=41"></script>
+<script src="api/game-adapter.js?v=41"></script>
 <script>
 /* ── 雾幕 + 路由 ─────────────────────────── */
 const FOG=document.getElementById('fog');
@@ -714,7 +823,8 @@ document.body.classList.add('sb-collapsed');
 document.body.classList.remove('sb-open');
 const firstPage=(location.hash||'#/hall').replace('#/','')||'hall';
 if(firstPage==='hall'){
-  setTimeout(()=>document.body.classList.add('sb-open'),750);
+  /* 推出动画完成后切换为展开态：必须同时移除 sb-collapsed，避免互斥 class 并存 */
+  setTimeout(()=>{document.body.classList.add('sb-open');document.body.classList.remove('sb-collapsed');},750);
 }else{
   setTimeout(()=>document.body.classList.add('sb-collapsed'),0);
 }
@@ -801,12 +911,16 @@ function toast(msg){
 }
 /* ═══════ 创建角色 #/role ═══════ */
 let pickedRole=null;
+/* 静态角色数据：后端不可达时的降级展示（旧演示角色） */
 const ROLES={
   'rc-linzhiwei':{img:'assets/character-linzhiwei.jpg',name:'林知微 · 档案调查员',state:'本局档案员 · 值夜中',
     comp:{img:'assets/character-guqinghe.jpg',name:'顾青禾 · 神秘访客',desc:'同路人 · 与你一样追查这封信',rel:'同路人 · 同行中',line:'我也在等一个答案'}},
   'rc-guqinghe':{img:'assets/character-guqinghe.jpg',name:'顾青禾 · 神秘访客',state:'雾港访客 · 初来乍到',
     comp:{img:'assets/character-linzhiwei.jpg',name:'林知微 · 档案调查员',desc:'档案调查员 · 与你并肩查案',rel:'档案调查员 · 同行中',line:'线索的尽头，我陪你走到最后'}}
 };
+/* 新协议：选角从后端 /api/roles 拉取真实角色，pickRole 记录 role_id */
+let liveRoles=null;
+function getPickedRole(){return pickedRole;}
 function companionPick(){
   const c=(ROLES[pickedRole]||ROLES['rc-linzhiwei']).comp;
   toast('已选择旅伴：'+c.name);
@@ -835,22 +949,72 @@ function refreshCompanions(){
   const r2=document.getElementById('rel2Name');
   if(r2)r2.textContent=r.comp.name;
 }
-function initRole(){
+async function initRole(){
+  const box=document.querySelector('.role-cards');
+  const pending=AIGame&&AIGame.pending?AIGame.pending():{};
+  const scriptName=pending.script||(AIGame.current&&AIGame.current()&&AIGame.current().script_name);
+  if(!box)return;
+  if(!liveRoles&&scriptName){
+    try{
+      const data=await AIGameAPI.request('/api/roles?script_name='+encodeURIComponent(scriptName));
+      liveRoles=data.roles||[];
+      if(!liveRoles.length){toast('该剧本暂无可选角色');return;}
+      box.innerHTML='';
+      liveRoles.forEach((role,i)=>{
+        const c=document.createElement('div');
+        c.className='role-card rv';
+        c.id='rc-live-'+role.role_id;
+        c.setAttribute('data-role-id',role.role_id);
+        c.onclick=()=>pickRole(c);
+        c.innerHTML='<span class="rc-tag">ROLE · 0'+(i+1)+'</span><span class="rc-seal" style="opacity:0">已选择</span>'+
+          '<div class="rc-img"><img src="assets/character-linzhiwei.jpg" alt="'+role.name+'立绘" width="1773" height="2364"></div>'+
+          '<div class="rc-body"><h3>'+role.name+'</h3><p>'+(role.public_profile||'')+'</p>'+
+          '<div class="tags"><span class="tag">角色</span><span class="tag">可选</span></div></div>';
+        box.appendChild(c);
+      });
+      pickedRole=liveRoles[0].role_id;
+      document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('picked'));
+      const first=box.querySelector('.role-card');if(first)first.classList.add('picked');
+      return;
+    }catch(err){/* 后端不可达，降级静态角色 */toast('选角服务暂不可用，展示演示角色');}
+  }
   if(!pickedRole){
     pickedRole='rc-linzhiwei';
-    document.getElementById('rc-linzhiwei').classList.add('picked');
+    const el=document.getElementById('rc-linzhiwei');
+    if(el)el.classList.add('picked');
   }
   refreshCompanions();
 }
 function pickRole(card){
   document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('picked'));
   card.classList.add('picked');
-  pickedRole=card.id;
-  refreshCompanions();
-  toast('已选择身份：'+card.querySelector('h3').textContent);
+  pickedRole=card.dataset.roleId||card.id;
+  if(card.dataset.roleId){
+    /* 动态角色：刷新我的角色卡 */
+    const role=(liveRoles||[]).find(r=>r.role_id===pickedRole);
+    if(role){
+      const pi=document.getElementById('myRoleImg');
+      if(pi){pi.src='assets/character-linzhiwei.jpg';document.getElementById('myRoleName').textContent=role.name;document.getElementById('myRoleState').textContent='本局身份 · 已选定';}
+    }
+    toast('已选择身份：'+card.querySelector('h3').textContent);
+  }else{
+    refreshCompanions();
+    toast('已选择身份：'+card.querySelector('h3').textContent);
+  }
 }
 function pickChip(el){
   el.classList.toggle('on');
+}
+function pickOne(el){
+  const row=el.closest('.chip-row');
+  if(row)row.querySelectorAll('.mini-chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+}
+function onWeight(el){
+  const v=+el.value;
+  const t=v<5?'偏推理':v>5?'偏情感':'均衡';
+  const l=document.getElementById('upWeightVal');
+  if(l)l.textContent=t+' · '+v;
 }
 function pickImg(el){
   document.querySelectorAll('.img-choice .ic-item').forEach(c=>c.classList.remove('on'));
@@ -1058,23 +1222,94 @@ function showSaveTip(){
   clearTimeout(tip._t);
   tip._t=setTimeout(()=>tip.classList.remove('show'),2600);
 }
+function chipVal(sel){
+  const el=document.querySelector(sel+' .mini-chip.on');
+  return el?(el.dataset.v||el.textContent.trim()):'';
+}
 function submitUpload(){
   const title=document.getElementById('upTitle').value.trim()||'未命名剧本';
   const intro=document.getElementById('upIntro').value.trim();
   if(!intro){showWarn();toast('输入内容无法生成剧本，请重新编辑');return;}
   showSaveTip();
-  const genre=[...document.querySelectorAll('#genreRow .mini-chip.on')].map(c=>c.textContent).join(' / ');
-  document.getElementById('azTitle').textContent=title+'（'+genre+'）';
-  go('analyzing');
+  const form={
+    players:Number(chipVal('#upPlayersRow').replace(' 人','')||'2'),
+    length:chipVal('#upLengthRow')||'1h',
+    rating:chipVal('#upRatingRow')||'全年龄',
+    complexity:chipVal('#upComplexityRow')||'新手',
+    style:chipVal('#upStyleRow')||'本格推理',
+    world:chipVal('#upWorldRow')||'都市怪谈',
+    tone:chipVal('#upToneRow')||'悬疑冷峻',
+    weight:Number(document.getElementById('upWeight').value||'5'),
+    structure:chipVal('#upStructureRow')||'正叙单线',
+    space:chipVal('#upSpaceRow')||'封闭空间',
+    ending:chipVal('#upEndingRow')||'单一真相',
+    seed:document.getElementById('upSeed').value.trim(),
+    banned:document.getElementById('upBanned').value.trim()
+  };
+  try{localStorage.setItem('aiStoryLastParams',JSON.stringify(form));}catch(e){}
+  const az=document.getElementById('azTitle');
+  if(az)az.textContent=title+'（'+form.style+' · '+form.world+' · '+form.tone+'）';
+  /* 新协议：POST /api/creation 启动多 Agent 创作，轮询 /api/creation?id= */
+  fetch('/api/creation',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({form:form})
+  }).then(r=>r.json()).then(res=>{
+    if(!res.ok)throw new Error(res.error||'创建失败');
+    try{sessionStorage.setItem('aiStoryCreationTask',res.task_id);}catch(e){}
+    go('analyzing');
+  }).catch(err=>{
+    toast('暂时无法连接创作服务：'+(err.message||'模型网络不可达'));
+    go('analyzing'); /* 仍进入分析页，页内会提示离线降级 */
+  });
 }
 
 /* ═══════ 分析进度 #/analyzing ═══════ */
 let azTimer=null;
 function startAnalyze(){
-  if(azTimer){clearInterval(azTimer);azTimer=null;}
+  const taskId=(()=>{try{return sessionStorage.getItem('aiStoryCreationTask');}catch(e){return null;}})();
   const steps=[['az1','azState1'],['az2','azState2'],['az3','azState3'],['az4','azState4']];
-  steps.forEach(([id,st])=>{document.getElementById(id).classList.remove('run','done');document.getElementById(st).textContent='等待中';});
-  document.getElementById('azBar').style.width='0%';
+  const reset=()=>{steps.forEach(([id,st])=>{document.getElementById(id).classList.remove('run','done');document.getElementById(st).textContent='等待中';});document.getElementById('azBar').style.width='0%';};
+  const mark=(idx,text)=>{const [id,st]=steps[idx];if(idx>0){const [pid,pst]=steps[idx-1];document.getElementById(pid).classList.add('done');document.getElementById(pst).textContent='已完成 ✓';}document.getElementById(id).classList.add('run');document.getElementById(st).textContent=text;document.getElementById('azBar').style.width=(((idx+1)/steps.length)*100)+'%';};
+  const finish=()=>{const [pid,pst]=steps[steps.length-1];document.getElementById(pid).classList.remove('run');document.getElementById(pid).classList.add('done');document.getElementById(pst).textContent='已完成 ✓';document.getElementById('azBar').style.width='100%';};
+  if(azTimer){clearInterval(azTimer);azTimer=null;}
+  reset();
+  /* 新协议：真实轮询 /api/creation?id=（每 2s），状态机驱动四步展示 */
+  if(taskId){
+    const poll=async()=>{
+      try{
+        const res=await fetch('/api/creation?id='+encodeURIComponent(taskId));
+        const json=await res.json();
+        if(!json.ok)throw new Error(json.error||'查询失败');
+        const s=json.data||json;
+        const status=s.status||'queued';
+        if(status==='queued')mark(0,'正在构思故事与人物…');
+        else if(status==='creating'||status==='generating_media')mark(1,'多 Agent 正在协作创作…');
+        else if(status==='completed'||status==='completed_with_missing_assets'){
+          finish();
+          try{sessionStorage.removeItem('aiStoryCreationTask');}catch(e){}
+          const msg=status==='completed_with_missing_assets'?'剧本已生成 · 文字模式可玩（图片与音乐稍后补齐）':'归档完成 · 即将进入角色创建';
+          toast(msg);
+          if(AIGame&&AIGame.setPending&&s.script_name)AIGame.setPending(s.script_name);
+          setTimeout(()=>go('role'),1600);
+          return;
+        }else if(status==='failed'||status==='interrupted'){
+          finish();
+          toast((s.error||'生成任务已中断')+' · 请稍后重新提交');
+          setTimeout(()=>go('upload'),2000);
+          return;
+        }
+        azTimer=setTimeout(poll,2000);
+      }catch(err){
+        finish();
+        toast('创作服务连接失败：'+(err.message||'请检查后端'));
+        setTimeout(()=>go('upload'),2000);
+      }
+    };
+    poll();
+    return;
+  }
+  /* 降级：无创作任务（离线/演示）时走原有动画 */
   let cur=0;
   const bar=document.getElementById('azBar');
   azTimer=setInterval(()=>{
@@ -1148,6 +1383,39 @@ function switchNote(el,idx){
   toast('已切换到案卷：'+d.t);
 }
 
+/* ── 剧本库：新协议 GET /api/scripts 动态渲染（可玩剧本卡片置顶） ── */
+async function loadLibrary(){
+  const grid=document.getElementById('storyGrid');
+  const empty=document.getElementById('emptyState');
+  if(!grid)return;
+  try{
+    const data=await AIGameAPI.request('/api/scripts');
+    const scripts=(data.scripts||[]).filter(s=>s.ready);
+    grid.querySelectorAll('.story-card.live').forEach(c=>c.remove());
+    scripts.forEach((s,i)=>{
+      const roles=(s.roles||[]).map(r=>r.name);
+      const card=document.createElement('article');
+      card.className='story-card rv live';
+      card.dataset.category='mystery';
+      card.onclick=()=>{AIGame.setPending(s.script_name);go('role');};
+      card.innerHTML=
+        '<span class="case-tag">CASE '+(i+1).toString().padStart(4,'0')+'</span><span class="seal">可 玩</span>'+
+        '<div class="cover"><img src="assets/scene-archive.jpg" alt="'+s.title+'封面" width="1773" height="2364"></div>'+
+        '<div class="body"><div class="tags"><span class="tag">推理</span><span class="tag">多角色</span></div>'+
+        '<h3>'+s.title+'</h3><p>'+((roles.length?roles.join(' · '):'选择角色，开始体验'))+'</p>'+
+        '<div class="meta"><span class="stat">◈ '+(s.roles?roles.length:0)+' 个可选身份</span><span class="more">选择角色 →</span></div></div>';
+      grid.insertBefore(card,grid.firstChild);
+    });
+    if(empty){
+      const liveCount=grid.querySelectorAll('.story-card.live').length;
+      empty.querySelector('h3').textContent=liveCount?'':'剧本库还是空的';
+      empty.querySelector('p').textContent=liveCount?'':'提交创作表单，让 AI 为你生成第一个剧本。';
+    }
+  }catch(err){
+    if(empty){empty.querySelector('h3').textContent='剧本库加载失败';empty.querySelector('p').textContent=err.message||'请确认后端服务已启动';empty.classList.add('show');}
+  }
+}
+
 /* ── 首屏路由启动 ───────────────────────── */
 (function boot(){
   const h=(location.hash||'#/hall').replace('#/','')||'hall';
@@ -1159,6 +1427,7 @@ function switchNote(el,idx){
   if(h==='analyzing')startAnalyze();
   if(h==='upload')setupUpload();
   refreshCompanions();
+  loadLibrary();
 })();
 </script>
 </body>
