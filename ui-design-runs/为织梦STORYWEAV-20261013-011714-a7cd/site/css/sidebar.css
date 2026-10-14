@@ -2,7 +2,7 @@
 /* 外层 sb-wrap 负责宽度动画（裁切），内部 .sidebar 宽度恒定 236px，
    收起/展开时内部元素不再被挤压 reflow，消除震荡错位 */
 .sb-wrap{width:236px;flex-shrink:0;overflow:hidden;transition:width .45s var(--ease)}
-.sidebar{width:236px;flex-shrink:0;position:sticky;top:0;height:100vh;
+.sidebar{width:236px;position:fixed;left:0;top:0;bottom:0;height:100vh;
   display:flex;flex-direction:column;border-right:1px solid var(--line-soft);
   background:linear-gradient(180deg,rgba(10,15,24,.72),rgba(10,15,24,.55));
   backdrop-filter:blur(10px);z-index:40}
@@ -101,6 +101,7 @@ body.sb-open .sb-wrap{width:236px}
 body.sb-open .sidebar{opacity:1;pointer-events:auto}
 @media(max-width:840px){
   .sb-wrap{width:100%}
+  .sidebar{width:100%;left:0}
   body.sb-collapsed .sb-wrap{width:100%}
   body.sb-collapsed .sidebar{opacity:1;pointer-events:auto}
   body.sb-collapsed:not(.sb-open) .sb-toggle{display:none}
