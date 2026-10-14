@@ -24,11 +24,40 @@
 .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(34px,3.6vw,52px);
   line-height:1.18;letter-spacing:.01em;max-width:15ch;margin:14px 0;text-shadow:0 2px 30px rgba(0,0,0,.6)}
 .hero p{max-width:52ch;font-size:14px;line-height:1.85;color:rgba(236,230,216,.78);margin-bottom:28px}
-.hero-seal{position:absolute;top:24px;right:26px;z-index:4;
-  font-family:var(--serif);font-weight:700;font-size:12px;letter-spacing:.22em;
-  color:rgba(242,234,216,.9);padding:10px 18px;border:1px solid rgba(242,234,216,.4);
-  transform:rotate(2deg);background:rgba(10,15,24,.38);backdrop-filter:blur(4px);
-  border-radius:2px;text-align:center;line-height:1.5}
-.hero-seal::after{content:"· 档案启封 ·";display:block;font-family:var(--mono);
-  font-size:8.5px;letter-spacing:.4em;color:var(--gold);margin-top:4px}
+/* ── 右上角 · 方形硬章（首次进入盖章动画） ── */
+.hero-seal{position:absolute;top:18px;right:20px;z-index:4;width:96px;height:96px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  font-family:var(--serif);font-weight:900;font-size:31px;letter-spacing:.06em;
+  color:#F6EFDF;text-align:center;line-height:1;
+  background:
+    radial-gradient(circle at 28% 20%,rgba(255,255,255,.17),transparent 40%),
+    radial-gradient(circle at 74% 80%,rgba(0,0,0,.2),transparent 55%),
+    linear-gradient(155deg,#B8422F 0%,#9A2B1E 72%,#8A2318 100%);
+  box-shadow:0 12px 28px -8px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.26),
+    inset 0 -3px 6px rgba(0,0,0,.32);
+  transform:rotate(-3deg);
+  clip-path:polygon(2.6% 1.8%,97.4% 1%,100% 97%,1.8% 99.2%); /* 硬章缺墨微不规则 */
+  outline:1px solid rgba(242,234,216,.92);outline-offset:-7px}
+/* 油墨颗粒纹理 */
+.hero-seal::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.45;
+  background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1.4px),
+    radial-gradient(rgba(0,0,0,.16) 1px,transparent 1.6px);
+  background-size:5px 5px,7px 7px}
+.hero-seal::after{content:"档案启封";display:block;font-family:var(--serif);
+  font-size:12.5px;font-weight:700;letter-spacing:.24em;color:#F6EFDF;opacity:.94;
+  margin-left:.24em;margin-top:2px;line-height:1}
+/* 盖章：盖下 → 顿住 → 回弹；同标签页首次进入播放 */
+@keyframes sealStamp{
+  0%{opacity:0;transform:translateY(-170px) rotate(16deg) scale(2.1)}
+  52%{opacity:1;transform:translateY(12px) rotate(-6deg) scale(1.06)}
+  66%{transform:translateY(-7px) rotate(-1deg) scale(.96)}
+  80%{transform:translateY(4px) rotate(-4.5deg) scale(1.04)}
+  100%{opacity:1;transform:translateY(0) rotate(-3deg) scale(1)}
+}
+@keyframes sealRing{
+  0%{box-shadow:0 0 0 0 rgba(176,58,46,.6),0 12px 28px -8px rgba(0,0,0,.7)}
+  100%{box-shadow:0 0 0 30px rgba(176,58,46,0),0 12px 28px -8px rgba(0,0,0,.7)}
+}
+.hero-seal.seal-anim{animation:sealStamp 1s cubic-bezier(.22,.75,.36,1.14) both,
+  sealRing .75s ease-out .52s both}
 

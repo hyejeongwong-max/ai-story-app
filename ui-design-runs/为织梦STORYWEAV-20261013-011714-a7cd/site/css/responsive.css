@@ -12,6 +12,8 @@
   .nav{flex-direction:row;gap:4px;padding:0 8px}.nav-item{padding:8px 12px}
   .nav-item .ic{display:none}.nav-item.active::before{display:none}
   .stage{max-width:100%}.hero{margin:0;border-radius:var(--r-shell);height:360px}
+  .hero-seal{width:76px;height:76px;font-size:24px;top:14px;right:14px}
+  .hero-seal::after{font-size:10.5px}
   .stamp-big{display:none}.save-tip{left:16px;right:auto;bottom:16px}
   .detail-hero,.play-grid,.notes-wrap{grid-template-columns:1fr}
   .companions,.role-cards{grid-template-columns:1fr}

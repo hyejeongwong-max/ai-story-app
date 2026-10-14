@@ -1418,6 +1418,12 @@ async function loadLibrary(){
 
 /* ── 首屏路由启动 ───────────────────────── */
 (function boot(){
+  /* 首次进入：右上角方形硬章盖章动画（同标签页只播一次） */
+  const seal=document.querySelector('.hero-seal');
+  if(seal&&!sessionStorage.getItem('sealPlayed')){
+    seal.classList.add('seal-anim');
+    try{sessionStorage.setItem('sealPlayed','1');}catch(e){}
+  }
   const h=(location.hash||'#/hall').replace('#/','')||'hall';
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===h));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===h));
