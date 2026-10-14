@@ -7,22 +7,22 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='6' y='6' width='88' height='88' rx='10' fill='%23B03A2E'/%3E%3Crect x='15' y='15' width='70' height='70' rx='5' fill='none' stroke='%23F2EAD8' stroke-width='3.5'/%3E%3Ctext x='50' y='66' font-size='40' font-family='serif' font-weight='900' fill='%23F2EAD8' text-anchor='middle'%3E沉%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://miaoda.feishu.cn">
 <link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=34">
-<link rel="stylesheet" href="css/sidebar.css?v=34">
-<link rel="stylesheet" href="css/ui.css?v=34">
-<link rel="stylesheet" href="css/hero.css?v=34">
-<link rel="stylesheet" href="css/tabs.css?v=34">
-<link rel="stylesheet" href="css/continue.css?v=34">
-<link rel="stylesheet" href="css/story-card.css?v=34">
-<link rel="stylesheet" href="css/stamp-desk.css?v=34">
-<link rel="stylesheet" href="css/toast.css?v=34">
-<link rel="stylesheet" href="css/page-detail.css?v=34">
-<link rel="stylesheet" href="css/page-role.css?v=34">
-<link rel="stylesheet" href="css/page-play.css?v=34">
-<link rel="stylesheet" href="css/page-ending.css?v=34">
-<link rel="stylesheet" href="css/page-upload.css?v=34">
-<link rel="stylesheet" href="css/page-notes.css?v=34">
-<link rel="stylesheet" href="css/responsive.css?v=34">
+<link rel="stylesheet" href="css/base.css?v=35">
+<link rel="stylesheet" href="css/sidebar.css?v=35">
+<link rel="stylesheet" href="css/ui.css?v=35">
+<link rel="stylesheet" href="css/hero.css?v=35">
+<link rel="stylesheet" href="css/tabs.css?v=35">
+<link rel="stylesheet" href="css/continue.css?v=35">
+<link rel="stylesheet" href="css/story-card.css?v=35">
+<link rel="stylesheet" href="css/stamp-desk.css?v=35">
+<link rel="stylesheet" href="css/toast.css?v=35">
+<link rel="stylesheet" href="css/page-detail.css?v=35">
+<link rel="stylesheet" href="css/page-role.css?v=35">
+<link rel="stylesheet" href="css/page-play.css?v=35">
+<link rel="stylesheet" href="css/page-ending.css?v=35">
+<link rel="stylesheet" href="css/page-upload.css?v=35">
+<link rel="stylesheet" href="css/page-notes.css?v=35">
+<link rel="stylesheet" href="css/responsive.css?v=35">
 
 </head>
 <body>
@@ -378,7 +378,7 @@
             </div>
             <div class="companion-mini">
               <img src="assets/character.jpg" alt="守夜人沈夜">
-              <div><b>守夜人 · 沈夜</b><span>关系 · 信任 <span id="trustVal">65</span></span></div>
+              <div><b>守夜人 · 沈夜</b><span>关系 · 信任 <span id="trustVal" class="trustv">65</span></span></div>
             </div>
             <div class="companion-mini" id="companionMini">
               <img id="compImg" src="assets/character-guqinghe.jpg" alt="同行者">
@@ -426,7 +426,7 @@
               <div class="relation"><span>守夜人 · 沈夜</span><b>信任 <span id="trustVal2">65</span></b></div>
               <div class="relation"><span id="rel2Name">顾青禾 · 神秘访客</span><b id="rel2Rel">同行</b></div>
             </div>
-            <div class="save-mini"><span class="pulse"></span>自动保存 · 最近一次刚刚</div>
+            <div class="save-mini"><span class="save-stamp">已归档</span><span>自动保存 · 最近一次刚刚</span></div>
           </div>
         </div>
       </section>
@@ -653,8 +653,8 @@
 <div class="trail-layer" id="trailLayer" aria-hidden="true"></div>
 
 <!-- ═══ 前后端对接层（API 出口 + 后端驱动） ═══ -->
-<script src="api/api-client.js?v=34"></script>
-<script src="api/game-adapter.js?v=34"></script>
+<script src="api/api-client.js?v=35"></script>
+<script src="api/game-adapter.js?v=35"></script>
 <script>
 /* ── 雾幕 + 路由 ─────────────────────────── */
 const FOG=document.getElementById('fog');
@@ -812,7 +812,7 @@ function companionPick(){
   toast('已选择旅伴：'+c.name);
 }
 function setTrust(v){
-  ['trustVal','trustVal2'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=v;});
+  ['trustVal','trustVal2'].forEach(id=>{const el=document.getElementById(id);if(el){el.textContent=v;el.classList.remove('float');void el.offsetWidth;el.classList.add('float');}});
 }
 function refreshCompanions(){
   if(!ROLES[pickedRole])pickedRole='rc-linzhiwei';
@@ -968,6 +968,9 @@ function renderPlay(){
   if(s.clue){const c=document.getElementById('clue'+s.clue);if(c&&c.classList.contains('locked')){c.classList.remove('locked');c.classList.add('unlock');}}
   // 信任值
   if(s.trust){setTrust(Math.max(0,Math.min(100,parseInt(document.getElementById('trustVal').textContent)+s.trust)));}
+  // V0.1.2：正文金粉扫过 + 自动保存印章盖印（每次渲染重放）
+  box.classList.remove('sweep');void box.offsetWidth;box.classList.add('sweep');
+  const sm=document.querySelector('.save-mini');if(sm){sm.classList.remove('stamped');void sm.offsetWidth;sm.classList.add('stamped');}
 }
 function renderOpts(s){
   const box=document.getElementById('optBox');

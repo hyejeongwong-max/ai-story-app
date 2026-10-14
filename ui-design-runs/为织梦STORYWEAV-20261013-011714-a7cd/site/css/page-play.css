@@ -113,3 +113,34 @@
 .next-btn{background:rgba(191,160,90,.1);border-color:rgba(191,160,90,.45)}
 .next-btn:hover{background:rgba(191,160,90,.2)}
 
+/* ── V0.1.2 五层沉浸动画（P0 仪式感 + P1 氛围） ─────────── */
+/* 抉择层 · 选项印章戳定：按压下沉 + 落章回弹 + 金色章圈 */
+.opt{transition:transform .22s var(--ease),opacity .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease),background .3s var(--ease)}
+.opt:active{transform:translateY(1px) scale(.965)}
+.opt.stamping{animation:stampSeal .34s var(--ease)}
+.opt.stamping::after{content:"";position:absolute;inset:5px;border-radius:8px;border:1.5px solid rgba(191,160,90,0);animation:sealRing .34s var(--ease)}
+@keyframes stampSeal{0%{transform:scale(1.05)}50%{transform:scale(.985)}72%{transform:scale(1.02)}100%{transform:scale(1)}}
+@keyframes sealRing{0%{border-color:rgba(191,160,90,0);transform:scale(.92)}32%{border-color:rgba(191,160,90,.7)}100%{border-color:rgba(191,160,90,0);transform:scale(1.05)}}
+/* 抉择层 · 确认按钮入场脉动（提示可继续） */
+.next-btn{animation:nextPulse 1.05s var(--ease) .1s both}
+@keyframes nextPulse{0%{transform:scale(.98);box-shadow:0 0 0 0 rgba(191,160,90,0)}45%{transform:scale(1.02);box-shadow:0 0 26px rgba(191,160,90,.38)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(191,160,90,0)}}
+/* 叙事层 · 正文金粉扫过：每次渲染沿文字扫一道金色高光 */
+.narrative .nar-text{position:relative}
+.narrative .nar-text.sweep::before{content:"";position:absolute;top:0;bottom:0;left:0;width:46%;
+  background:linear-gradient(100deg,transparent,rgba(191,160,90,.16),transparent);
+  transform:skewX(-18deg) translateX(-260%);animation:narSweep 1.2s var(--ease) .18s both;pointer-events:none}
+@keyframes narSweep{0%{transform:skewX(-18deg) translateX(-260%)}100%{transform:skewX(-18deg) translateX(340%)}}
+/* 氛围层 · 场景图极缓视差（约 30s 一圈，肉眼不可察觉） */
+.scene-box img{animation:kenburns 30s ease-in-out infinite alternate}
+@keyframes kenburns{0%{transform:scale(1.001) translate(0,0)}100%{transform:scale(1.07) translate(1.1%,-.6%)}}
+/* 反馈层 · 自动保存印章化 + 每次推进盖印重放 */
+.save-mini .save-stamp{font-family:var(--serif);font-size:9px;font-weight:900;letter-spacing:.1em;color:var(--teal);
+  border:1px solid rgba(88,193,178,.45);border-radius:3px;padding:2px 7px;transform:rotate(-4deg);display:inline-block}
+.save-mini.stamped .save-stamp{animation:stampIn .55s var(--ease)}
+@keyframes stampIn{0%{transform:rotate(-4deg) scale(1.3);opacity:0}55%{transform:rotate(-4deg) scale(.92);opacity:1}100%{transform:rotate(-4deg) scale(1)}}
+/* 反馈层 · 关系信任值浮升：数值更新时上浮落定 */
+.relation b{display:inline-block}
+.play-side .companion-mini span .trustv{display:inline-block}
+.relation b.float,.play-side .trustv.float{animation:trustFloat .6s var(--ease)}
+@keyframes trustFloat{0%{transform:translateY(4px);opacity:.35}100%{transform:none;opacity:1}}
+

@@ -105,6 +105,11 @@
     renderInventory(data);
     renderHistory(data);
     renderCheckpoints(data);
+
+    // V0.1.2：正文金粉扫过 + 自动保存印章盖印（每次推进重放）
+    if (textBox) { textBox.classList.remove('sweep'); void textBox.offsetWidth; textBox.classList.add('sweep'); }
+    const sm = document.querySelector('.save-mini');
+    if (sm) { sm.classList.remove('stamped'); void sm.offsetWidth; sm.classList.add('stamped'); }
   }
 
   /* 文字确认按钮（内联承载 event_id 回执；文案来自 confirm_label/next_label，不硬编码动作） */
@@ -334,13 +339,24 @@
     tip.classList.add('show');
     clearTimeout(tip._t);
     tip._t = setTimeout(() => tip.classList.remove('show'), 2200);
+    // V0.1.2：自动保存印章同步盖印
+    const sm = document.querySelector('.save-mini');
+    if (sm) { sm.classList.remove('stamped'); void sm.offsetWidth; sm.classList.add('stamped'); }
   }
   function showPlayError(message) {
     if (typeof toast === 'function') toast(message);
   }
 
-  window.AIGame = {
-    startGame: startGame,
+  /* V0.1.2 · 抉择层：任何选项点击即盖章戳定（回弹 + 金圈），不阻塞业务回调 */
+  document.addEventListener('click', (e) => {
+    const o = e.target.closest('.opt');
+    if (!o) return;
+    o.classList.remove('stamping');
+    void o.offsetWidth;
+    o.classList.add('stamping');
+  }, true);
+
+  window.AIGame = {    startGame: startGame,
     resumeGame: resumeGame,
     act: act,
     syncEvents: syncEvents,
