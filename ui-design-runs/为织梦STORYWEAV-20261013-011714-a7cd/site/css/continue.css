@@ -8,7 +8,8 @@
   object-position:60% 40%;border:2px solid rgba(242,234,216,.6)}
 .continue .txt{flex:1;min-width:0}
 .continue .txt b{display:block;font-family:var(--serif);font-size:17px;font-weight:900;letter-spacing:.04em;margin-bottom:5px}
-.continue .txt span{display:block;font-size:12.5px;color:#6B5F48;line-height:1.7}
+.continue .txt span{display:block;font-size:12.5px;color:#6B5F48;line-height:1.7;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .continue .prog{height:5px;border-radius:3px;background:rgba(107,95,72,.25);overflow:hidden;margin-top:10px;max-width:320px}
 .continue .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--gold));
   border-radius:3px;transition:width 1.2s var(--ease) .2s}

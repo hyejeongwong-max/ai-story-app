@@ -57,6 +57,7 @@ body.sb-collapsed .stage{max-width:min(1400px,calc(100% - 40px))}
 /* ── 放大镜指针 + 脚印轨迹 ────────────────────────────────── */
 .mag-on, .mag-on *{cursor:none!important}
 .magnifier{position:fixed;left:0;top:0;z-index:120;width:50px;height:55px;pointer-events:none;
+  display:none;
   transform:translate(-50%,-44%);will-change:transform;
   transition:width .28s var(--ease),height .28s var(--ease)}
 .magnifier img{width:100%;height:100%;object-fit:contain;display:block;
