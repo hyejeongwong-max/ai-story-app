@@ -245,11 +245,6 @@
           </div>
         </section>
 
-        <section class="empty-state" id="emptyState">
-          <div class="glyph">∅</div><h3>还没有上传剧本</h3>
-          <p>创建你的第一个剧本，让故事开始流动。</p>
-          <button class="btn btn-cta btn-sm" onclick="go('upload')">开始创作</button>
-        </section>
       </section>
 
 <!-- ═══════ 剧本详情 #/detail ═══════ -->
@@ -834,7 +829,7 @@
 <!-- ═══ 前后端对接层（API 出口 + 后端驱动） ═══ -->
 <script src="api/api-client.js?v=51"></script>
 <script src="api/game-adapter.js?v=51"></script>
-<script src="onboarding.js?v=54"></script>
+<script src="onboarding.js?v=55"></script>
 <script src="login.js?v=52"></script>
 <script>
 /* ── 雾幕 + 路由 ─────────────────────────── */
@@ -956,21 +951,19 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const GRID=document.getElementById('storyGrid');
 const CONT=document.getElementById('continueBar');
 const MINE=document.getElementById('minePanel');
-const EMPTY=document.getElementById('emptyState');
 function switchTab(tab,btn){
   document.querySelectorAll('#tabs .tab-card').forEach(c=>{
     const on=c===btn;c.setAttribute('aria-pressed',String(on));c.setAttribute('aria-selected',String(on));
   });
-  if(tab==='mine'){GRID.style.display='none';CONT.style.display='none';MINE.hidden=false;EMPTY.classList.remove('show');}
+  if(tab==='mine'){GRID.style.display='none';CONT.style.display='none';MINE.hidden=false;}
   else{
-    MINE.hidden=true;EMPTY.classList.remove('show');GRID.style.display='grid';
+    MINE.hidden=true;GRID.style.display='grid';
     CONT.style.display=tab==='all'?'flex':'none';
     let visible=0;
     document.querySelectorAll('.story-card[data-category]').forEach(card=>{
       const show=tab==='all'||card.dataset.category===tab;
       card.style.display=show?'':'none';if(show)visible++;
     });
-    if(visible===0)EMPTY.classList.add('show');
   }
 }
 
@@ -1530,7 +1523,6 @@ function switchNote(el,idx){
 /* ── 剧本库：新协议 GET /api/scripts 动态渲染（可玩剧本卡片置顶） ── */
 async function loadLibrary(){
   const grid=document.getElementById('storyGrid');
-  const empty=document.getElementById('emptyState');
   if(!grid)return;
   try{
     const data=await AIGameAPI.request('/api/scripts');
@@ -1550,13 +1542,8 @@ async function loadLibrary(){
         '<div class="meta"><span class="stat">◈ '+(s.roles?roles.length:0)+' 个可选身份</span><span class="more">选择角色 →</span></div></div>';
       grid.insertBefore(card,grid.firstChild);
     });
-    if(empty){
-      const liveCount=grid.querySelectorAll('.story-card.live').length;
-      empty.querySelector('h3').textContent=liveCount?'':'剧本库还是空的';
-      empty.querySelector('p').textContent=liveCount?'':'提交创作表单，让 AI 为你生成第一个剧本。';
-    }
   }catch(err){
-    if(empty){empty.querySelector('h3').textContent='当前为前端预览';empty.querySelector('p').textContent='可浏览页面和体验新手引导；AI 剧情与剧本生成需连接后端服务。';empty.classList.add('show');}
+    /* 后端不可用时静默降级：保留离线演示剧本卡片 */
   }
 }
 
