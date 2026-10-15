@@ -38,6 +38,10 @@
     current = data;
     pendingBranch = null;
 
+    // 离线演示模式横幅（后端不可达时由 API 层标记）
+    const ob = document.getElementById('offlineBanner');
+    if (ob) ob.hidden = !window.__offlineMode;
+
     // 角色身份：开局后更新 play 页角色卡（selected_role_name 优先）
     const roleName = data.selected_role_name || data.role_name || '';
     const rn = $('myRoleName');

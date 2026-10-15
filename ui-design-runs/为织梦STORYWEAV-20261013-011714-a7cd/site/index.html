@@ -8,24 +8,24 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='6' y='6' width='88' height='88' rx='10' fill='%23B03A2E'/%3E%3Crect x='15' y='15' width='70' height='70' rx='5' fill='none' stroke='%23F2EAD8' stroke-width='3.5'/%3E%3Ctext x='50' y='66' font-size='40' font-family='serif' font-weight='900' fill='%23F2EAD8' text-anchor='middle'%3E深%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://miaoda.feishu.cn">
 <link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=49">
-<link rel="stylesheet" href="onboarding.css?v=49">
-<link rel="stylesheet" href="login.css?v=49">
-<link rel="stylesheet" href="css/sidebar.css?v=49">
-<link rel="stylesheet" href="css/ui.css?v=49">
-<link rel="stylesheet" href="css/hero.css?v=49">
-<link rel="stylesheet" href="css/tabs.css?v=49">
-<link rel="stylesheet" href="css/continue.css?v=49">
-<link rel="stylesheet" href="css/story-card.css?v=49">
-<link rel="stylesheet" href="css/stamp-desk.css?v=49">
-<link rel="stylesheet" href="css/toast.css?v=49">
-<link rel="stylesheet" href="css/page-detail.css?v=49">
-<link rel="stylesheet" href="css/page-role.css?v=49">
-<link rel="stylesheet" href="css/page-play.css?v=49">
-<link rel="stylesheet" href="css/page-ending.css?v=49">
-<link rel="stylesheet" href="css/page-upload.css?v=49">
-<link rel="stylesheet" href="css/page-notes.css?v=49">
-<link rel="stylesheet" href="css/responsive.css?v=49">
+<link rel="stylesheet" href="css/base.css?v=51">
+<link rel="stylesheet" href="onboarding.css?v=51">
+<link rel="stylesheet" href="login.css?v=51">
+<link rel="stylesheet" href="css/sidebar.css?v=51">
+<link rel="stylesheet" href="css/ui.css?v=51">
+<link rel="stylesheet" href="css/hero.css?v=51">
+<link rel="stylesheet" href="css/tabs.css?v=51">
+<link rel="stylesheet" href="css/continue.css?v=51">
+<link rel="stylesheet" href="css/story-card.css?v=51">
+<link rel="stylesheet" href="css/stamp-desk.css?v=51">
+<link rel="stylesheet" href="css/toast.css?v=51">
+<link rel="stylesheet" href="css/page-detail.css?v=51">
+<link rel="stylesheet" href="css/page-role.css?v=51">
+<link rel="stylesheet" href="css/page-play.css?v=51">
+<link rel="stylesheet" href="css/page-ending.css?v=51">
+<link rel="stylesheet" href="css/page-upload.css?v=51">
+<link rel="stylesheet" href="css/page-notes.css?v=51">
+<link rel="stylesheet" href="css/responsive.css?v=51">
 <style>
 /* 印章毛糙缺墨边缘（SVG filter 须与 HTML 同文档，故内联；投影由 box-shadow 承担） */
 .hero-seal{filter:url(#sealGrain)}
@@ -292,15 +292,15 @@
             <div class="panel-card rv">
               <h4>◆ 章节档案</h4>
               <div class="chapter-list">
-                <div class="chapter done">
+                <div class="chapter done" onclick="chapterClick(this)">
                   <span class="ch-no">CH.01</span><span class="ch-name">雾港的来信</span>
                   <span class="ch-time">约 15 分钟</span><span class="ch-state">已解锁</span>
                 </div>
-                <div class="chapter cur">
+                <div class="chapter cur" onclick="chapterClick(this)">
                   <span class="ch-no">CH.02</span><span class="ch-name">老钟楼的约定</span>
                   <span class="ch-time">约 18 分钟</span><span class="ch-state">进行中</span>
                 </div>
-                <div class="chapter lock">
+                <div class="chapter lock" onclick="chapterClick(this)">
                   <span class="ch-no">CH.03</span><span class="ch-name">月落之时的真相</span>
                   <span class="ch-time">约 20 分钟</span><span class="ch-state">锁定</span>
                 </div>
@@ -332,7 +332,7 @@
 
         <div class="role-cards">
           <div class="role-card rv" id="rc-linzhiwei" onclick="pickRole(this)">
-            <span class="rc-tag">ROLE · 01</span><span class="rc-seal">已选择</span>
+            <span class="rc-tag">ROLE · 01</span><span class="rc-seal" style="opacity:0">已选择</span>
             <div class="rc-img"><img src="assets/character-linzhiwei.jpg" alt="林知微立绘" width="1773" height="2364"></div>
             <div class="rc-body">
               <h3>林知微 · 档案调查员</h3>
@@ -341,7 +341,7 @@
             </div>
           </div>
           <div class="role-card rv" id="rc-guqinghe" onclick="pickRole(this)">
-            <span class="rc-tag">ROLE · 02</span><span class="rc-seal">已选择</span>
+            <span class="rc-tag">ROLE · 02</span><span class="rc-seal" style="opacity:0">已选择</span>
             <div class="rc-img"><img src="assets/character-guqinghe.jpg" alt="顾青禾立绘" width="1773" height="2364"></div>
             <div class="rc-body">
               <h3>顾青禾 · 神秘访客</h3>
@@ -414,6 +414,7 @@
           <span class="chapter-badge" id="playChapter">CH.02 · 老钟楼的约定</span>
           <span class="chapter-badge" style="border-color:rgba(88,193,178,.4);color:var(--teal)">第 1 幕 · 雾港</span>
         </div>
+        <div class="offline-banner" id="offlineBanner" hidden>◈ 离线演示模式：剧情由内置演示引擎驱动，接入后端后可体验完整 AI 剧情</div>
 
         <div class="play-grid">
           <!-- 左栏：旅伴 + 进度 -->
@@ -521,12 +522,12 @@
           </div>
           <div id="scriptUploadPanel" class="script-upload-panel">
             <h3>把你的故事交给档案局</h3><p>选择已有剧本，确认内容后再进行解析。</p>
-            <label class="script-file-label" for="scriptFile">＋ 选择剧本文件<input type="file" id="scriptFile" accept=".txt,.md,.pdf,.docx" hidden></label>
+            <label class="script-file-label" for="scriptFile">＋ 选择剧本文件<input type="file" id="scriptFile" accept=".txt,.md,.pdf,.docx" hidden onchange="onScriptFile(this)"></label>
             <p class="hint">支持 TXT、Markdown、PDF、Word（DOCX），单个文件不超过 20 MB。</p>
             <p id="scriptFileStatus" role="status" aria-live="polite">尚未选择文件</p>
             <label for="scriptText">剧本内容预览</label><textarea id="scriptText" placeholder="TXT / Markdown 文件会在这里显示内容" readonly></textarea>
             <p class="hint">当前为前端审核预览，文件仅在本机选择；剧本上传与解析需要接入后端服务。</p>
-            <button type="button" class="btn btn-cta" id="parseScript" disabled>上传并解析剧本</button>
+            <button type="button" class="btn btn-cta" id="parseScript" onclick="parseScriptClick()">上传并解析剧本</button>
           </div>
           <div class="form-panel rv" id="uploadForm">
             <div class="upload-warn" id="uploadWarn">
@@ -826,10 +827,10 @@
 <div class="trail-layer" id="trailLayer" aria-hidden="true"></div>
 
 <!-- ═══ 前后端对接层（API 出口 + 后端驱动） ═══ -->
-<script src="api/api-client.js?v=49"></script>
-<script src="api/game-adapter.js?v=49"></script>
-<script src="onboarding.js?v=49"></script>
-<script src="login.js?v=49"></script>
+<script src="api/api-client.js?v=51"></script>
+<script src="api/game-adapter.js?v=51"></script>
+<script src="onboarding.js?v=51"></script>
+<script src="login.js?v=51"></script>
 <script>
 /* ── 雾幕 + 路由 ─────────────────────────── */
 const FOG=document.getElementById('fog');
@@ -1047,13 +1048,21 @@ async function initRole(){
   if(!pickedRole){
     pickedRole='rc-linzhiwei';
     const el=document.getElementById('rc-linzhiwei');
-    if(el)el.classList.add('picked');
+    if(el){
+      el.classList.add('picked');
+      const seal=el.querySelector('.rc-seal');
+      if(seal)seal.style.opacity='1';
+    }
   }
   refreshCompanions();
 }
 function pickRole(card){
   document.querySelectorAll('.role-card').forEach(c=>c.classList.remove('picked'));
   card.classList.add('picked');
+  /* 已选择印章：仅选中卡片显示 */
+  document.querySelectorAll('.rc-seal').forEach(s=>{s.style.opacity='0';});
+  const seal=card.querySelector('.rc-seal');
+  if(seal)seal.style.opacity='1';
   pickedRole=card.dataset.roleId||card.id;
   if(card.dataset.roleId){
     /* 动态角色：刷新我的角色卡 */
@@ -1276,6 +1285,41 @@ function initEnding(){
 function setupUpload(){
   const t=document.getElementById('upTitle');
   if(t&&!t.value)t.value='雾都旧案';
+}
+function chapterClick(el){
+  const state=el.querySelector('.ch-state');
+  if(state&&state.textContent==='锁定'){toast('本章尚未解锁，请先完成上一章');return;}
+  go('play');
+}
+/* 剧本文件选择：本地预览 + 状态反馈（解析需后端，未接入时明确提示） */
+function onScriptFile(input){
+  const file=input.files&&input.files[0];
+  const status=document.getElementById('scriptFileStatus');
+  const text=document.getElementById('scriptText');
+  const parse=document.getElementById('parseScript');
+  if(!file){
+    if(status)status.textContent='尚未选择文件';
+    if(text)text.value='';
+    if(parse)parse.disabled=true;
+    return;
+  }
+  if(file.size>20*1024*1024){toast('文件超过 20MB 限制，请更换');input.value='';return;}
+  if(status)status.textContent='已选择：'+file.name+'（'+((file.size/1024).toFixed(0))+' KB）';
+  if(parse)parse.disabled=false;
+  const ext=(file.name.split('.').pop()||'').toLowerCase();
+  if(ext==='txt'||ext==='md'){
+    const r=new FileReader();
+    r.onload=()=>{if(text)text.value=String(r.result||'').slice(0,4000);};
+    r.readAsText(file);
+  }else{
+    if(text)text.value='「'+file.name+'」为 '+ext.toUpperCase()+' 格式，文件已选中，内容解析需接入后端服务后完成。';
+  }
+}
+function parseScriptClick(){
+  const input=document.getElementById('scriptFile');
+  const file=input&&input.files&&input.files[0];
+  if(!file){toast('请先选择剧本文件（支持 TXT / Markdown / PDF / Word）');return;}
+  toast('剧本上传与解析需接入后端服务，当前为前端预览模式，已在本机预览文件内容');
 }
 function showWarn(){const w=document.getElementById('uploadWarn');if(w&&!w.classList.contains('show')){w.classList.add('show');}}
 function hideWarn(){const w=document.getElementById('uploadWarn');if(w)w.classList.remove('show');}

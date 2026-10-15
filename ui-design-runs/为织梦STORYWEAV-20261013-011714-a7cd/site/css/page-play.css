@@ -6,6 +6,10 @@
 .play-head .back:hover{color:var(--gold)}
 .play-head .chapter-badge{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--gold);
   border:1px solid rgba(191,160,90,.4);padding:6px 14px;border-radius:999px}
+/* 离线演示模式提示条 */
+.offline-banner{margin:-6px 0 16px;padding:9px 14px;font-size:12px;line-height:1.5;color:#F6EFDF;
+  background:rgba(191,160,90,.10);border:1px solid rgba(191,160,90,.35);border-left:3px solid var(--gold);
+  border-radius:6px}
 .play-grid{display:grid;grid-template-columns:200px 1fr 250px;gap:18px;align-items:start}
 /* 左栏：旅伴与进度 */
 .play-side{border-radius:var(--r-card);border:1px solid var(--line-soft);padding:18px 16px;
