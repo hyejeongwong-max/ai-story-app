@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://miaoda.feishu.cn">
 <link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/base.css?v=42">
+<link rel="stylesheet" href="onboarding.css?v=42">
 <link rel="stylesheet" href="css/sidebar.css?v=42">
 <link rel="stylesheet" href="css/ui.css?v=42">
 <link rel="stylesheet" href="css/hero.css?v=42">
@@ -464,6 +465,19 @@
           <div class="sec-title" style="margin-bottom:24px">
             <h2>创建新剧本</h2><div class="en">CREATE NEW ARCHIVE · 新案拟编号 CASE-0250</div>
           </div>
+          <div class="creation-methods" role="group" aria-label="选择创作方式">
+            <button type="button" class="creation-method selected" data-method="upload" aria-pressed="true"><small>方式一 · 已有故事</small><strong>上传剧本</strong><span>上传已有的剧本文件，整理故事与角色。</span></button>
+            <button type="button" class="creation-method" data-method="ai" aria-pressed="false"><small>方式二 · 从灵感开始</small><strong>提供信息，AI 生成剧本</strong><span>填写题材、人物和背景，让 AI 构建故事。</span></button>
+          </div>
+          <div id="scriptUploadPanel" class="script-upload-panel">
+            <h3>把你的故事交给档案局</h3><p>选择已有剧本，确认内容后再进行解析。</p>
+            <label class="script-file-label" for="scriptFile">＋ 选择剧本文件<input type="file" id="scriptFile" accept=".txt,.md,.pdf,.docx" hidden></label>
+            <p class="hint">支持 TXT、Markdown、PDF、Word（DOCX），单个文件不超过 20 MB。</p>
+            <p id="scriptFileStatus" role="status" aria-live="polite">尚未选择文件</p>
+            <label for="scriptText">剧本内容预览</label><textarea id="scriptText" placeholder="TXT / Markdown 文件会在这里显示内容" readonly></textarea>
+            <p class="hint">当前为前端审核预览，文件仅在本机选择；剧本上传与解析需要接入后端服务。</p>
+            <button type="button" class="btn btn-cta" id="parseScript" disabled>上传并解析剧本</button>
+          </div>
           <div class="form-panel rv" id="uploadForm">
             <div class="upload-warn" id="uploadWarn">
               <div class="warn-seal">驳回</div>
@@ -764,6 +778,7 @@
 <!-- ═══ 前后端对接层（API 出口 + 后端驱动） ═══ -->
 <script src="api/api-client.js?v=42"></script>
 <script src="api/game-adapter.js?v=42"></script>
+<script src="onboarding.js?v=42"></script>
 <script>
 /* ── 雾幕 + 路由 ─────────────────────────── */
 const FOG=document.getElementById('fog');
@@ -1412,7 +1427,7 @@ async function loadLibrary(){
       empty.querySelector('p').textContent=liveCount?'':'提交创作表单，让 AI 为你生成第一个剧本。';
     }
   }catch(err){
-    if(empty){empty.querySelector('h3').textContent='剧本库加载失败';empty.querySelector('p').textContent=err.message||'请确认后端服务已启动';empty.classList.add('show');}
+    if(empty){empty.querySelector('h3').textContent='当前为前端预览';empty.querySelector('p').textContent='可浏览页面和体验新手引导；AI 剧情与剧本生成需连接后端服务。';empty.classList.add('show');}
   }
 }
 
