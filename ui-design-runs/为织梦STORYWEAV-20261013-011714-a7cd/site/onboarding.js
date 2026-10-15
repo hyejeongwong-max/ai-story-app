@@ -66,8 +66,8 @@
   overlay.querySelector('.guide-next').onclick=()=>{if(index<steps.length-1){index++;show();}else{ returnPage='hall';close();}};
   document.addEventListener('keydown',e=>{if(!active)return;if(e.key==='Escape'){e.preventDefault();close();}if(e.key==='ArrowRight'){e.preventDefault();overlay.querySelector('.guide-next').click();}if(e.key==='ArrowLeft'){e.preventDefault();overlay.querySelector('.guide-prev').click();}if(e.key==='Tab'){const a=[...card.querySelectorAll('button')].filter(b=>!b.hidden);let n=a.indexOf(document.activeElement);e.preventDefault();a[(n+(e.shiftKey?-1:1)+a.length)%a.length].focus();}});
   window.addEventListener('resize',position);
-  let seen=false;try{seen=!!localStorage.getItem(KEY);}catch{}
-  if(authed()&&(!seen||new URLSearchParams(location.search).get('guide')==='1'))setTimeout(start,900);
+  /* 登录进入后总是自动播放新手指南（保留 seen 标记仅用于统计，不阻止播放；?guide=1 仍可强制） */
+  if(authed())setTimeout(start,900);
 })();
 
 (() => {
