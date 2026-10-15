@@ -62,6 +62,7 @@
   function start(){if(!authed())return;lastFocus=document.activeElement;returnPage=document.querySelector('.page.active')?.dataset.page||'hall';oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';document.body.classList.add('guide-active');active=true;index=0;card.style.visibility='hidden';overlay.hidden=false;show();}
   function close(){document.body.classList.remove('guide-active');active=false;renderVersion++;preparing=false;clearTimeout(timer);overlay.hidden=true;document.body.style.overflow=oldOverflow;try{localStorage.setItem(KEY,'seen');}catch{}go(returnPage);lastFocus?.focus();}
   launch.onclick=start;overlay.querySelector('.guide-close').onclick=close;
+  window.__startGuide=start; /* 供登录成功后调用：未看过引导的新用户登录即自动播放一次 */
   overlay.querySelector('.guide-prev').onclick=()=>{if(index>0){index--;show();}};
   overlay.querySelector('.guide-next').onclick=()=>{if(index<steps.length-1){index++;show();}else{ returnPage='hall';close();}};
   document.addEventListener('keydown',e=>{if(!active)return;if(e.key==='Escape'){e.preventDefault();close();}if(e.key==='ArrowRight'){e.preventDefault();overlay.querySelector('.guide-next').click();}if(e.key==='ArrowLeft'){e.preventDefault();overlay.querySelector('.guide-prev').click();}if(e.key==='Tab'){const a=[...card.querySelectorAll('button')].filter(b=>!b.hidden);let n=a.indexOf(document.activeElement);e.preventDefault();a[(n+(e.shiftKey?-1:1)+a.length)%a.length].focus();}});

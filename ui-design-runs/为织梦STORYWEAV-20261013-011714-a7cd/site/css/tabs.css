@@ -13,7 +13,7 @@
   box-shadow:0 8px 22px -8px rgba(0,0,0,.5),0 0 18px rgba(242,234,216,.12)}
 .tab-card[aria-pressed="true"] .name{color:var(--paper);text-shadow:none}
 .tab-card[aria-pressed="true"] .num{color:var(--gold);font-weight:700}
-.tab-card .stamp{position:absolute;top:-8px;right:-8px;width:18px;height:16px;
+.tab-card .stamp{position:absolute;top:-8px;right:-3px;width:27px;height:24px;
   background:url(../assets/pin.png) no-repeat center/contain;
   transform:scale(0) rotate(-12deg);transition:transform .35s var(--ease) .06s}
 .tab-card[aria-pressed="true"] .stamp{transform:scale(1) rotate(-12deg)}

@@ -70,6 +70,21 @@ body.sb-collapsed .form-panel .chip-row.wrap{flex-wrap:wrap}
 .upload-warn .warn-back:hover{background:var(--red);color:#fff;
   box-shadow:0 0 18px rgba(176,58,46,.45)}
 
+/* ── 剧本上传解析中 ─────────────────────────── */
+.script-upload-panel{position:relative}
+.script-upload-panel.parsing .script-file-label,.script-upload-panel.parsing .hint,
+.script-upload-panel.parsing #scriptFileStatus,.script-upload-panel.parsing #scriptText,
+.script-upload-panel.parsing #parseScript,.script-upload-panel.parsing label[for="scriptText"]{opacity:.35;pointer-events:none}
+.script-parsing{margin:14px 0 4px;padding:20px 18px;border:1px dashed rgba(212,178,108,.45);
+  border-radius:10px;background:rgba(12,17,28,.5);text-align:center}
+.sp-ring{width:30px;height:30px;margin:0 auto 12px;border-radius:50%;
+  border:3px solid rgba(212,178,108,.25);border-top-color:#d5b26c;animation:spSpin 1s linear infinite}
+@keyframes spSpin{to{transform:rotate(360deg)}}
+.sp-txt{font-size:13px;color:#ead8ad;letter-spacing:2px;margin-bottom:12px}
+.sp-steps{display:flex;gap:8px;justify-content:center}
+.sp-steps i{width:34px;height:3px;border-radius:2px;background:rgba(212,178,108,.22);transition:background .3s}
+.sp-steps i.on{background:#c7a75f}
+
 /* ── 分析中 #/analyzing ─────────────────────────────────── */
 .analyzing-wrap{max-width:640px;margin:60px auto;text-align:center}
 body.sb-collapsed .analyzing-wrap{max-width:720px}

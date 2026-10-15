@@ -73,6 +73,7 @@
         try { localStorage.setItem(KEY, user); } catch (e2) {}
         if (err) err.classList.remove('show');
         if (window.__syncGuideLaunch) window.__syncGuideLaunch();
+        if (!localStorage.getItem('deepexplore.onboarding.v1') && window.__startGuide) setTimeout(window.__startGuide, 900);
         toast('档案建立成功 · 欢迎加入深探');
         go('hall');
       } else {
@@ -81,6 +82,7 @@
           try { localStorage.setItem(KEY, user); } catch (e2) {}
           if (err) err.classList.remove('show');
           if (window.__syncGuideLaunch) window.__syncGuideLaunch();
+          if (!localStorage.getItem('deepexplore.onboarding.v1') && window.__startGuide) setTimeout(window.__startGuide, 900);
           toast(user === 'admin' ? '身份核验通过 · 欢迎回来，档案管理员' : '身份核验通过 · 欢迎回来，' + user);
           go('hall');
         } else {
