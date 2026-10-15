@@ -29,7 +29,16 @@
 }
 .login-kicker{font-size:11px;letter-spacing:4px;color:#8a6a30;text-transform:uppercase}
 .login-card h1{margin:12px 0 8px;font-family:serif;font-size:34px;color:#f0e4c8;letter-spacing:2px}
-.login-sub{color:#8e9bad;font-size:13px;letter-spacing:1px;margin:0 0 30px}
+.login-sub{color:#8e9bad;font-size:13px;letter-spacing:1px;margin:0 0 24px}
+/* 登录/注册 Tab */
+.login-tabs{display:flex;margin:0 0 22px;border-bottom:1px solid #223041}
+.login-tabs .tab-item{
+  flex:1;padding:11px 0 12px;background:transparent;border:0;border-bottom:2px solid transparent;
+  color:#5d6c80;font-size:14px;letter-spacing:4px;cursor:pointer;transition:color .2s,border-color .2s
+}
+.login-tabs .tab-item:hover{color:#b99a56}
+.login-tabs .tab-item.active{color:#ead8ad;border-bottom-color:#c7a75f}
+.login-field[hidden]{display:none}
 .login-field{position:relative;margin-bottom:16px;text-align:left}
 .login-field label{display:block;font-size:11px;letter-spacing:2px;color:#7d8ca0;margin:0 0 8px;text-transform:uppercase}
 .login-field input{

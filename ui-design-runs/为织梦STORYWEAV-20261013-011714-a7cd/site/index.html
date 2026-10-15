@@ -83,25 +83,34 @@
         <div class="login-shade"></div>
         <div class="login-wrap">
           <div class="login-card">
-            <div class="login-stamp">准入</div>
+            <div class="login-stamp" id="loginStamp">准入</div>
             <div class="login-kicker">DEEP EXPLORE · 档案管理入口</div>
             <h1>深探</h1>
-            <p class="login-sub">输入档案编号与密钥，进入互动故事档案局</p>
+            <p class="login-sub" id="loginSub">输入档案编号与密钥，进入互动故事档案局</p>
+            <div class="login-tabs" role="tablist">
+              <button type="button" class="tab-item active" data-tab="login" role="tab" aria-selected="true">登录</button>
+              <button type="button" class="tab-item" data-tab="register" role="tab" aria-selected="false">注册</button>
+            </div>
             <form id="loginForm" novalidate>
               <div class="login-field">
                 <label for="loginUser">档案编号</label>
                 <svg class="ic" width="18" height="18" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.79,40.31,185.67,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></svg>
-                <input type="text" id="loginUser" autocomplete="username" placeholder="admin" spellcheck="false">
+                <input type="text" id="loginUser" autocomplete="username" placeholder="设置你的档案编号" spellcheck="false">
               </div>
               <div class="login-field">
                 <label for="loginPass">密钥</label>
                 <svg class="ic" width="18" height="18" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>
                 <input type="password" id="loginPass" autocomplete="current-password" placeholder="••••">
               </div>
+              <div class="login-field" id="passConfirmField" hidden>
+                <label for="loginPass2">确认密钥</label>
+                <svg class="ic" width="18" height="18" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>
+                <input type="password" id="loginPass2" autocomplete="new-password" placeholder="••••">
+              </div>
               <div class="login-err" id="loginErr"></div>
-              <button type="submit" class="login-submit">进入档案局</button>
+              <button type="submit" class="login-submit" id="loginSubmit">进入档案局</button>
             </form>
-            <p class="login-hint">试用编号 <b>admin</b> · 密钥 <b>0000</b></p>
+            <p class="login-hint" id="loginHint">试用编号 <b>admin</b> · 密钥 <b>0000</b></p>
           </div>
         </div>
       </section>

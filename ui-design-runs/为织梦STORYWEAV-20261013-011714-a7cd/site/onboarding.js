@@ -11,7 +11,7 @@
     {title:'准备好了，故事等你落笔',text:'从大厅选择一份感兴趣的卷宗开始吧。以后想再了解各个板块，点击右下角「新手指南」即可重新查看。',page:'hall'}
   ];
   const launch=document.createElement('button');launch.className='guide-launch';launch.textContent='✧ 新手指南';document.body.append(launch);
-  const authed=()=>{try{return localStorage.getItem('deepexplore.auth')==='admin';}catch(e){return false;}};
+  const authed=()=>{try{const u=localStorage.getItem('deepexplore.auth');if(!u)return false;if(u==='admin')return true;const us=JSON.parse(localStorage.getItem('deepexplore.users')||'{}');return !!us[u];}catch(e){return false;}};
   function syncLaunch(){launch.style.display=authed()?'':'none';}
   syncLaunch();window.addEventListener('load',syncLaunch);window.__syncGuideLaunch=syncLaunch;
   const overlay=document.createElement('div');overlay.className='guide-overlay';overlay.hidden=true;
