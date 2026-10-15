@@ -59,14 +59,15 @@
     preparing=false;
     position();card.style.visibility='visible';card.focus({preventScroll:true});
   }
-  function start(){if(!authed())return;lastFocus=document.activeElement;returnPage=document.querySelector('.page.active')?.dataset.page||'hall';oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';document.body.classList.add('guide-active');active=true;index=0;card.style.visibility='hidden';overlay.hidden=false;show();}
-  function close(){document.body.classList.remove('guide-active');active=false;renderVersion++;preparing=false;clearTimeout(timer);overlay.hidden=true;document.body.style.overflow=oldOverflow;try{localStorage.setItem(KEY,'seen');}catch{}go(returnPage);lastFocus?.focus();}
+  function start(){if(!authed())return;lastFocus=document.activeElement;returnPage=document.querySelector('.page.active')?.dataset.page||'hall';document.body.classList.add('guide-active');active=true;index=0;card.style.visibility='hidden';overlay.hidden=false;show();}
+  function close(){document.body.classList.remove('guide-active');active=false;renderVersion++;preparing=false;clearTimeout(timer);overlay.hidden=true;try{localStorage.setItem(KEY,'seen');}catch{}go(returnPage);lastFocus?.focus();}
   launch.onclick=start;overlay.querySelector('.guide-close').onclick=close;
   window.__startGuide=start; /* 供登录成功后调用：未看过引导的新用户登录即自动播放一次 */
   overlay.querySelector('.guide-prev').onclick=()=>{if(index>0){index--;show();}};
   overlay.querySelector('.guide-next').onclick=()=>{if(index<steps.length-1){index++;show();}else{ returnPage='hall';close();}};
   document.addEventListener('keydown',e=>{if(!active)return;if(e.key==='Escape'){e.preventDefault();close();}if(e.key==='ArrowRight'){e.preventDefault();overlay.querySelector('.guide-next').click();}if(e.key==='ArrowLeft'){e.preventDefault();overlay.querySelector('.guide-prev').click();}if(e.key==='Tab'){const a=[...card.querySelectorAll('button')].filter(b=>!b.hidden);let n=a.indexOf(document.activeElement);e.preventDefault();a[(n+(e.shiftKey?-1:1)+a.length)%a.length].focus();}});
   window.addEventListener('resize',position);
+  window.addEventListener('scroll',position,{passive:true});
   /* 引导只对新用户自动播放一次：未看过时登录自动弹；看过之后不再自动出现（?guide=1 可强制重看，右下角按钮可手动重看） */
   let seen=false;try{seen=!!localStorage.getItem(KEY);}catch{}
   if(authed()&&(!seen||new URLSearchParams(location.search).get('guide')==='1'))setTimeout(start,900);
