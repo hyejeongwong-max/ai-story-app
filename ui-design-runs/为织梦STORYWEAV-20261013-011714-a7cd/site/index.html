@@ -8,23 +8,24 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='6' y='6' width='88' height='88' rx='10' fill='%23B03A2E'/%3E%3Crect x='15' y='15' width='70' height='70' rx='5' fill='none' stroke='%23F2EAD8' stroke-width='3.5'/%3E%3Ctext x='50' y='66' font-size='40' font-family='serif' font-weight='900' fill='%23F2EAD8' text-anchor='middle'%3E深%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://miaoda.feishu.cn">
 <link href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css?v=42">
-<link rel="stylesheet" href="onboarding.css?v=42">
-<link rel="stylesheet" href="css/sidebar.css?v=42">
-<link rel="stylesheet" href="css/ui.css?v=42">
-<link rel="stylesheet" href="css/hero.css?v=42">
-<link rel="stylesheet" href="css/tabs.css?v=42">
-<link rel="stylesheet" href="css/continue.css?v=42">
-<link rel="stylesheet" href="css/story-card.css?v=42">
-<link rel="stylesheet" href="css/stamp-desk.css?v=42">
-<link rel="stylesheet" href="css/toast.css?v=42">
-<link rel="stylesheet" href="css/page-detail.css?v=42">
-<link rel="stylesheet" href="css/page-role.css?v=42">
-<link rel="stylesheet" href="css/page-play.css?v=42">
-<link rel="stylesheet" href="css/page-ending.css?v=42">
-<link rel="stylesheet" href="css/page-upload.css?v=42">
-<link rel="stylesheet" href="css/page-notes.css?v=42">
-<link rel="stylesheet" href="css/responsive.css?v=42">
+<link rel="stylesheet" href="css/base.css?v=43">
+<link rel="stylesheet" href="onboarding.css?v=43">
+<link rel="stylesheet" href="login.css?v=43">
+<link rel="stylesheet" href="css/sidebar.css?v=43">
+<link rel="stylesheet" href="css/ui.css?v=43">
+<link rel="stylesheet" href="css/hero.css?v=43">
+<link rel="stylesheet" href="css/tabs.css?v=43">
+<link rel="stylesheet" href="css/continue.css?v=43">
+<link rel="stylesheet" href="css/story-card.css?v=43">
+<link rel="stylesheet" href="css/stamp-desk.css?v=43">
+<link rel="stylesheet" href="css/toast.css?v=43">
+<link rel="stylesheet" href="css/page-detail.css?v=43">
+<link rel="stylesheet" href="css/page-role.css?v=43">
+<link rel="stylesheet" href="css/page-play.css?v=43">
+<link rel="stylesheet" href="css/page-ending.css?v=43">
+<link rel="stylesheet" href="css/page-upload.css?v=43">
+<link rel="stylesheet" href="css/page-notes.css?v=43">
+<link rel="stylesheet" href="css/responsive.css?v=43">
 
 </head>
 <body>
@@ -67,6 +68,7 @@
         <img src="assets/character.jpg" alt="守夜人沈夜">
         <div><b>守夜人 · 沈夜</b><span>档案局今夜值班 · 新案已归档</span></div>
       </div>
+      <button id="logoutBtn" class="logout-btn" type="button">注销 · 退出档案局</button>
     </div>
   </aside>
   </div>
@@ -74,6 +76,35 @@
   <!-- ═══ 主内容 ═══ -->
   <main class="main">
     <div class="stage">
+
+      <!-- ═══════ 登录 · 档案准入 #/login ═══════ -->
+      <section class="page" data-page="login">
+        <div class="login-bg"><img src="assets/hero-bg.jpg" alt="深夜档案局"></div>
+        <div class="login-shade"></div>
+        <div class="login-wrap">
+          <div class="login-card">
+            <div class="login-stamp">准入</div>
+            <div class="login-kicker">DEEP EXPLORE · 档案管理入口</div>
+            <h1>深探</h1>
+            <p class="login-sub">输入档案编号与密钥，进入互动故事档案局</p>
+            <form id="loginForm" novalidate>
+              <div class="login-field">
+                <label for="loginUser">档案编号</label>
+                <svg class="ic" width="18" height="18" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.79,40.31,185.67,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></svg>
+                <input type="text" id="loginUser" autocomplete="username" placeholder="admin" spellcheck="false">
+              </div>
+              <div class="login-field">
+                <label for="loginPass">密钥</label>
+                <svg class="ic" width="18" height="18" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></svg>
+                <input type="password" id="loginPass" autocomplete="current-password" placeholder="••••">
+              </div>
+              <div class="login-err" id="loginErr"></div>
+              <button type="submit" class="login-submit">进入档案局</button>
+            </form>
+            <p class="login-hint">试用编号 <b>admin</b> · 密钥 <b>0000</b></p>
+          </div>
+        </div>
+      </section>
 
       <!-- ═══════ 剧本大厅 #/hall ═══════ -->
       <section class="page" data-page="hall">
@@ -776,9 +807,10 @@
 <div class="trail-layer" id="trailLayer" aria-hidden="true"></div>
 
 <!-- ═══ 前后端对接层（API 出口 + 后端驱动） ═══ -->
-<script src="api/api-client.js?v=42"></script>
-<script src="api/game-adapter.js?v=42"></script>
-<script src="onboarding.js?v=42"></script>
+<script src="api/api-client.js?v=43"></script>
+<script src="api/game-adapter.js?v=43"></script>
+<script src="onboarding.js?v=43"></script>
+<script src="login.js?v=43"></script>
 <script>
 /* ── 雾幕 + 路由 ─────────────────────────── */
 const FOG=document.getElementById('fog');
@@ -1439,7 +1471,10 @@ async function loadLibrary(){
     seal.classList.add('seal-anim');
     try{sessionStorage.setItem('sealPlayed','1');}catch(e){}
   }
-  const h=(location.hash||'#/hall').replace('#/','')||'hall';
+  /* 登录守卫：未核验身份时一律先落登录页 */
+  let authed=false;try{authed=localStorage.getItem('deepexplore.auth')==='admin';}catch(e){}
+  const h0=(location.hash||'#/hall').replace('#/','')||'hall';
+  const h=authed?h0:'login';
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===h));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===h));
   if(h==='play')initPlay();

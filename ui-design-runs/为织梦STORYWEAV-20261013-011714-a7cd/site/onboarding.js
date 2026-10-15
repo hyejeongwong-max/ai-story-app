@@ -11,6 +11,9 @@
     {title:'准备好了，故事等你落笔',text:'从大厅选择一份感兴趣的卷宗开始吧。以后想再了解各个板块，点击右下角「新手指南」即可重新查看。',page:'hall'}
   ];
   const launch=document.createElement('button');launch.className='guide-launch';launch.textContent='✧ 新手指南';document.body.append(launch);
+  const authed=()=>{try{return localStorage.getItem('deepexplore.auth')==='admin';}catch(e){return false;}};
+  function syncLaunch(){launch.style.display=authed()?'':'none';}
+  syncLaunch();window.addEventListener('load',syncLaunch);window.__syncGuideLaunch=syncLaunch;
   const overlay=document.createElement('div');overlay.className='guide-overlay';overlay.hidden=true;
   overlay.innerHTML='<div class="guide-shade"></div>'.repeat(4)+'<div class="guide-focus"></div><section class="guide-card" role="dialog" aria-modal="true" aria-labelledby="guide-title" aria-describedby="guide-description" tabindex="-1"><button class="guide-close" aria-label="跳过引导">×</button><div class="guide-kicker">DEEP EXPLORE / 新人入局指南</div><h2 id="guide-title"></h2><p id="guide-description"></p><div class="guide-progress" aria-hidden="true"></div><div class="guide-actions"><span class="guide-count"></span><button class="guide-prev">上一步</button><button class="guide-next">开始了解 →</button></div><div class="guide-hint">可用 ← → 切换步骤，Esc 跳过</div></section>';
   document.body.append(overlay);
@@ -56,7 +59,7 @@
     preparing=false;
     position();card.style.visibility='visible';card.focus({preventScroll:true});
   }
-  function start(){lastFocus=document.activeElement;returnPage=document.querySelector('.page.active')?.dataset.page||'hall';oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';document.body.classList.add('guide-active');active=true;index=0;card.style.visibility='hidden';overlay.hidden=false;show();}
+  function start(){if(!authed())return;lastFocus=document.activeElement;returnPage=document.querySelector('.page.active')?.dataset.page||'hall';oldOverflow=document.body.style.overflow;document.body.style.overflow='hidden';document.body.classList.add('guide-active');active=true;index=0;card.style.visibility='hidden';overlay.hidden=false;show();}
   function close(){document.body.classList.remove('guide-active');active=false;renderVersion++;preparing=false;clearTimeout(timer);overlay.hidden=true;document.body.style.overflow=oldOverflow;try{localStorage.setItem(KEY,'seen');}catch{}go(returnPage);lastFocus?.focus();}
   launch.onclick=start;overlay.querySelector('.guide-close').onclick=close;
   overlay.querySelector('.guide-prev').onclick=()=>{if(index>0){index--;show();}};
@@ -64,7 +67,7 @@
   document.addEventListener('keydown',e=>{if(!active)return;if(e.key==='Escape'){e.preventDefault();close();}if(e.key==='ArrowRight'){e.preventDefault();overlay.querySelector('.guide-next').click();}if(e.key==='ArrowLeft'){e.preventDefault();overlay.querySelector('.guide-prev').click();}if(e.key==='Tab'){const a=[...card.querySelectorAll('button')].filter(b=>!b.hidden);let n=a.indexOf(document.activeElement);e.preventDefault();a[(n+(e.shiftKey?-1:1)+a.length)%a.length].focus();}});
   window.addEventListener('resize',position);
   let seen=false;try{seen=!!localStorage.getItem(KEY);}catch{}
-  if(!seen||new URLSearchParams(location.search).get('guide')==='1')setTimeout(start,900);
+  if(authed()&&(!seen||new URLSearchParams(location.search).get('guide')==='1'))setTimeout(start,900);
 })();
 
 (() => {
