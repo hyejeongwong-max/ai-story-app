@@ -1396,7 +1396,7 @@ function submitUpload(){
   /* 新协议：POST /api/creation 启动多 Agent 创作，轮询 /api/creation?id= */
   fetch('/api/creation',{
     method:'POST',
-    headers:{'Content-Type':'application/json'},
+    headers:{'Content-Type':'application/json','Authorization':'Basic YWRtaW46cXdlcg=='},
     body:JSON.stringify({form:form})
   }).then(r=>r.json()).then(res=>{
     if(!res.ok)throw new Error(res.error||'创建失败');
@@ -1422,7 +1422,7 @@ function startAnalyze(){
   if(taskId){
     const poll=async()=>{
       try{
-        const res=await fetch('/api/creation?id='+encodeURIComponent(taskId));
+        const res=await fetch('/api/creation?id='+encodeURIComponent(taskId),{headers:{'Authorization':'Basic YWRtaW46cXdlcg=='}});
         const json=await res.json();
         if(!json.ok)throw new Error(json.error||'查询失败');
         const s=json.data||json;

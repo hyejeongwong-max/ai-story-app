@@ -18,9 +18,14 @@
   async function request(path, payload, onProgress) {
     let response;
     try {
-      response = await fetch(path, payload === undefined ? {} : {
+      const apiHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/x-ndjson',
+        'Authorization': 'Basic YWRtaW46cXdlcg=='  // 后端接口访问凭证（admin/qwer）
+      };
+      response = await fetch(path, payload === undefined ? { headers: apiHeaders } : {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/x-ndjson' },
+        headers: apiHeaders,
         body: JSON.stringify(payload)
       });
     } catch (err) {
@@ -196,7 +201,7 @@
 
   /* ── 业务接口 ─────────────────────────────── */
   async function getRuntime() {
-    const response = await fetch(API.runtime);
+    const response = await fetch(API.runtime, { headers: { 'Authorization': 'Basic YWRtaW46cXdlcg==' } });
     const result = await response.json();
     if (!result.ok) throw new Error(result.error || '服务不可用');
     return result.data;
