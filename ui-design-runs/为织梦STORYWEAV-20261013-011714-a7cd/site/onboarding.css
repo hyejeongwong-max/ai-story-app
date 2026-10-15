@@ -2,7 +2,9 @@
 /* 引导浮层使用系统光标，避免原页面 cursor:none 隐藏鼠标。 */
 body.guide-active,body.guide-active *{cursor:auto!important}
 body.guide-active .guide-overlay button{cursor:pointer!important}
-body.guide-active #magnifier,body.guide-active #trailLayer{display:none!important}
+/* 引导时隐藏放大镜指针（已有系统光标），但保留脚印轨迹并置于引导层之上，鼠标后的小脚印始终可见 */
+body.guide-active #magnifier{display:none!important}
+body.guide-active #trailLayer{display:block!important;z-index:10001!important}
 .guide-shade{z-index:0}.guide-focus{z-index:1}.guide-card{z-index:2;pointer-events:auto;max-height:calc(100dvh - 32px);overflow:auto}
 .creation-methods{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}.creation-method{text-align:left;padding:24px;border:1px solid #524b3c;border-radius:10px;background:#121c29;color:#d9cdb3}.creation-method.selected{border-color:#c7a75f;background:#27271f;box-shadow:inset 0 0 0 1px #c7a75f}.creation-method small,.creation-method strong,.creation-method span{display:block}.creation-method small{color:#b79c68;font-size:12px;margin-bottom:10px}.creation-method strong{font-size:22px;margin-bottom:10px}.creation-method span{font-size:14px;color:#b8b0a0;line-height:1.7}.script-upload-panel{padding:32px;border:1px solid #514835;border-radius:12px;background:#141d29;color:#e8ddc7}.script-upload-panel h3{font-size:26px;margin-bottom:12px}.script-upload-panel p{line-height:1.8;margin-bottom:20px}.script-file-label{display:inline-block;padding:18px 32px;border:1px dashed #c4a66b;border-radius:6px;cursor:pointer}.script-upload-panel textarea{display:block;width:100%;min-height:200px;margin:12px 0 20px;padding:16px;background:#0c1420;border:1px solid #514835;border-radius:6px;color:#ddd;font:inherit;box-sizing:border-box}.script-upload-panel button:disabled{opacity:.45;cursor:not-allowed}.page #uploadForm[hidden],.script-upload-panel[hidden]{display:none!important}@media(max-width:650px){.creation-methods{grid-template-columns:1fr}.script-upload-panel{padding:20px}}
 /* Settle the target before a single placement; original reveal animations move its bounds. */
